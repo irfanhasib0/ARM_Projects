@@ -1,0 +1,5 @@
+git clone https://github.com/texane/stlink.git
+cd stlink
+make release
+cd build/Release
+cd install

@@ -1,0 +1,20 @@
+sudo apt-get install gperf
+sudo apt-get install bison
+sudo apt-get install flex
+cd ..
+git clone https://bitbucket.org/nuttx/nuttx
+git clone https://bitbucket.org/nuttx/apps
+git clone https://bitbucket.org/nuttx/tools
+cd tools/kconfig-frontends/
+./configure
+configure --enable-mconf
+make
+sudo make install
+sudo ldconfig
+cd ../..
+cd nuttx/tools/
+./configure.sh stm32f103-minimum/nsh
+cd ..
+make menuconfig
+make
+ls -l nuttx.bin

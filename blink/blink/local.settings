@@ -1,0 +1,20 @@
+# local configuration for CubeMX2Makefile.py script
+#
+#------------------------------------------------------------------------------------
+# uncomments the required local settings
+# supported config are:
+#	- GCC_PATH		: specifies the path to gcc toolchain
+#	- FLASH_PATH	: specifies the path to stlink utility
+#	- GDB_IP_PORT	: specifies the port to GDB server. Default is 4242
+#	- GDP_IP_ADDRESS: specifies the address to GDB server. Default is localhost
+#------------------------------------------------------------------------------------
+
+# Part 1: MAKEFILE
+#GCC_PATH = 
+#FLASH_PATH =
+
+#------------------------------------------------------------------------------------
+
+# Part 2: Code::Blocks IDE
+#GDB_IP_PORT = 4242
+#GDP_IP_ADDRESS = localhost

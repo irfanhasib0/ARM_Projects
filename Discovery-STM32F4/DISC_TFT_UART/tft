@@ -1,0 +1,5 @@
+1. tturn off RTOS
+2. add bsp includes
+3. add bsp ini+codes
+4. Adding BSP >> discovery.h + discovery_lcd.h + sdram.h +commom/lcd.h +components/ili9341.h
+5. Adding utility
