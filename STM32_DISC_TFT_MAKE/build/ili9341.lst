@@ -1,0 +1,2505 @@
+ARM GAS  /tmp/cc1cDCDG.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 2
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ili9341.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.ili9341_GetLcdPixelWidth,"ax",%progbits
+  20              		.align	1
+  21              		.p2align 2,,3
+  22              		.global	ili9341_GetLcdPixelWidth
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	ili9341_GetLcdPixelWidth:
+  28              	.LFB7:
+  29              		.file 1 "Core/Src/ili9341.c"
+   1:Core/Src/ili9341.c **** /**
+   2:Core/Src/ili9341.c ****   ******************************************************************************
+   3:Core/Src/ili9341.c ****   * @file    ili9341.c
+   4:Core/Src/ili9341.c ****   * @author  MCD Application Team
+   5:Core/Src/ili9341.c ****   * @version V1.0.2
+   6:Core/Src/ili9341.c ****   * @date    02-December-2014
+   7:Core/Src/ili9341.c ****   * @brief   This file includes the LCD driver for ILI9341 LCD.
+   8:Core/Src/ili9341.c ****   ******************************************************************************
+   9:Core/Src/ili9341.c ****   * @attention
+  10:Core/Src/ili9341.c ****   *
+  11:Core/Src/ili9341.c ****   * <h2><center>&copy; COPYRIGHT(c) 2014 STMicroelectronics</center></h2>
+  12:Core/Src/ili9341.c ****   *
+  13:Core/Src/ili9341.c ****   * Redistribution and use in source and binary forms, with or without modification,
+  14:Core/Src/ili9341.c ****   * are permitted provided that the following conditions are met:
+  15:Core/Src/ili9341.c ****   *   1. Redistributions of source code must retain the above copyright notice,
+  16:Core/Src/ili9341.c ****   *      this list of conditions and the following disclaimer.
+  17:Core/Src/ili9341.c ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  18:Core/Src/ili9341.c ****   *      this list of conditions and the following disclaimer in the documentation
+  19:Core/Src/ili9341.c ****   *      and/or other materials provided with the distribution.
+  20:Core/Src/ili9341.c ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  21:Core/Src/ili9341.c ****   *      may be used to endorse or promote products derived from this software
+  22:Core/Src/ili9341.c ****   *      without specific prior written permission.
+  23:Core/Src/ili9341.c ****   *
+  24:Core/Src/ili9341.c ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  25:Core/Src/ili9341.c ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  26:Core/Src/ili9341.c ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  27:Core/Src/ili9341.c ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  28:Core/Src/ili9341.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  29:Core/Src/ili9341.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ARM GAS  /tmp/cc1cDCDG.s 			page 2
+
+
+  30:Core/Src/ili9341.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  31:Core/Src/ili9341.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  32:Core/Src/ili9341.c ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  33:Core/Src/ili9341.c ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  34:Core/Src/ili9341.c ****   *
+  35:Core/Src/ili9341.c ****   ******************************************************************************
+  36:Core/Src/ili9341.c ****   */ 
+  37:Core/Src/ili9341.c **** 
+  38:Core/Src/ili9341.c **** /* Includes ------------------------------------------------------------------*/
+  39:Core/Src/ili9341.c **** #include "ili9341.h"
+  40:Core/Src/ili9341.c **** 
+  41:Core/Src/ili9341.c **** /** @addtogroup BSP
+  42:Core/Src/ili9341.c ****   * @{
+  43:Core/Src/ili9341.c ****   */ 
+  44:Core/Src/ili9341.c **** 
+  45:Core/Src/ili9341.c **** /** @addtogroup Components
+  46:Core/Src/ili9341.c ****   * @{
+  47:Core/Src/ili9341.c ****   */ 
+  48:Core/Src/ili9341.c ****   
+  49:Core/Src/ili9341.c **** /** @addtogroup ILI9341
+  50:Core/Src/ili9341.c ****   * @brief This file provides a set of functions needed to drive the 
+  51:Core/Src/ili9341.c ****   *        ILI9341 LCD.
+  52:Core/Src/ili9341.c ****   * @{
+  53:Core/Src/ili9341.c ****   */
+  54:Core/Src/ili9341.c **** 
+  55:Core/Src/ili9341.c **** /** @defgroup ILI9341_Private_TypesDefinitions
+  56:Core/Src/ili9341.c ****   * @{
+  57:Core/Src/ili9341.c ****   */ 
+  58:Core/Src/ili9341.c **** /**
+  59:Core/Src/ili9341.c ****   * @}
+  60:Core/Src/ili9341.c ****   */ 
+  61:Core/Src/ili9341.c **** 
+  62:Core/Src/ili9341.c **** /** @defgroup ILI9341_Private_Defines
+  63:Core/Src/ili9341.c ****   * @{
+  64:Core/Src/ili9341.c ****   */
+  65:Core/Src/ili9341.c **** /**
+  66:Core/Src/ili9341.c ****   * @}
+  67:Core/Src/ili9341.c ****   */ 
+  68:Core/Src/ili9341.c ****   
+  69:Core/Src/ili9341.c **** /** @defgroup ILI9341_Private_Macros
+  70:Core/Src/ili9341.c ****   * @{
+  71:Core/Src/ili9341.c ****   */
+  72:Core/Src/ili9341.c **** /**
+  73:Core/Src/ili9341.c ****   * @}
+  74:Core/Src/ili9341.c ****   */  
+  75:Core/Src/ili9341.c **** 
+  76:Core/Src/ili9341.c **** /** @defgroup ILI9341_Private_Variables
+  77:Core/Src/ili9341.c ****   * @{
+  78:Core/Src/ili9341.c ****   */ 
+  79:Core/Src/ili9341.c **** 
+  80:Core/Src/ili9341.c **** LCD_DrvTypeDef   ili9341_drv = 
+  81:Core/Src/ili9341.c **** {
+  82:Core/Src/ili9341.c ****   ili9341_Init,
+  83:Core/Src/ili9341.c ****   ili9341_ReadID,
+  84:Core/Src/ili9341.c ****   ili9341_DisplayOn,
+  85:Core/Src/ili9341.c ****   ili9341_DisplayOff,
+  86:Core/Src/ili9341.c ****   0,
+ARM GAS  /tmp/cc1cDCDG.s 			page 3
+
+
+  87:Core/Src/ili9341.c ****   0,
+  88:Core/Src/ili9341.c ****   0,
+  89:Core/Src/ili9341.c ****   0,
+  90:Core/Src/ili9341.c ****   0,
+  91:Core/Src/ili9341.c ****   0,
+  92:Core/Src/ili9341.c ****   ili9341_GetLcdPixelWidth,
+  93:Core/Src/ili9341.c ****   ili9341_GetLcdPixelHeight,
+  94:Core/Src/ili9341.c ****   0,
+  95:Core/Src/ili9341.c ****   0,    
+  96:Core/Src/ili9341.c **** };
+  97:Core/Src/ili9341.c **** 
+  98:Core/Src/ili9341.c **** /**
+  99:Core/Src/ili9341.c ****   * @}
+ 100:Core/Src/ili9341.c ****   */ 
+ 101:Core/Src/ili9341.c ****   
+ 102:Core/Src/ili9341.c **** /** @defgroup ILI9341_Private_FunctionPrototypes
+ 103:Core/Src/ili9341.c ****   * @{
+ 104:Core/Src/ili9341.c ****   */
+ 105:Core/Src/ili9341.c **** 
+ 106:Core/Src/ili9341.c **** /**
+ 107:Core/Src/ili9341.c ****   * @}
+ 108:Core/Src/ili9341.c ****   */ 
+ 109:Core/Src/ili9341.c ****   
+ 110:Core/Src/ili9341.c **** /** @defgroup ILI9341_Private_Functions
+ 111:Core/Src/ili9341.c ****   * @{
+ 112:Core/Src/ili9341.c ****   */   
+ 113:Core/Src/ili9341.c **** 
+ 114:Core/Src/ili9341.c **** /**
+ 115:Core/Src/ili9341.c ****   * @brief  Power on the LCD.
+ 116:Core/Src/ili9341.c ****   * @param  None
+ 117:Core/Src/ili9341.c ****   * @retval None
+ 118:Core/Src/ili9341.c ****   */
+ 119:Core/Src/ili9341.c **** void ili9341_Init(void)
+ 120:Core/Src/ili9341.c **** {
+ 121:Core/Src/ili9341.c ****   /* Initialize ILI9341 low level bus layer ----------------------------------*/
+ 122:Core/Src/ili9341.c ****   LCD_IO_Init();
+ 123:Core/Src/ili9341.c ****   
+ 124:Core/Src/ili9341.c ****   /* Configure LCD */
+ 125:Core/Src/ili9341.c ****   ili9341_WriteReg(0xCA);
+ 126:Core/Src/ili9341.c ****   ili9341_WriteData(0xC3);
+ 127:Core/Src/ili9341.c ****   ili9341_WriteData(0x08);
+ 128:Core/Src/ili9341.c ****   ili9341_WriteData(0x50);
+ 129:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWERB);
+ 130:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 131:Core/Src/ili9341.c ****   ili9341_WriteData(0xC1);
+ 132:Core/Src/ili9341.c ****   ili9341_WriteData(0x30);
+ 133:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWER_SEQ);
+ 134:Core/Src/ili9341.c ****   ili9341_WriteData(0x64);
+ 135:Core/Src/ili9341.c ****   ili9341_WriteData(0x03);
+ 136:Core/Src/ili9341.c ****   ili9341_WriteData(0x12);
+ 137:Core/Src/ili9341.c ****   ili9341_WriteData(0x81);
+ 138:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DTCA);
+ 139:Core/Src/ili9341.c ****   ili9341_WriteData(0x85);
+ 140:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 141:Core/Src/ili9341.c ****   ili9341_WriteData(0x78);
+ 142:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWERA);
+ 143:Core/Src/ili9341.c ****   ili9341_WriteData(0x39);
+ARM GAS  /tmp/cc1cDCDG.s 			page 4
+
+
+ 144:Core/Src/ili9341.c ****   ili9341_WriteData(0x2C);
+ 145:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 146:Core/Src/ili9341.c ****   ili9341_WriteData(0x34);
+ 147:Core/Src/ili9341.c ****   ili9341_WriteData(0x02);
+ 148:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_PRC);
+ 149:Core/Src/ili9341.c ****   ili9341_WriteData(0x20);
+ 150:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DTCB);
+ 151:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 152:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 153:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_FRMCTR1);
+ 154:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 155:Core/Src/ili9341.c ****   ili9341_WriteData(0x1B);
+ 156:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DFC);
+ 157:Core/Src/ili9341.c ****   ili9341_WriteData(0x0A);
+ 158:Core/Src/ili9341.c ****   ili9341_WriteData(0xA2);
+ 159:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWER1);
+ 160:Core/Src/ili9341.c ****   ili9341_WriteData(0x10);
+ 161:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWER2);
+ 162:Core/Src/ili9341.c ****   ili9341_WriteData(0x10);
+ 163:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_VCOM1);
+ 164:Core/Src/ili9341.c ****   ili9341_WriteData(0x45);
+ 165:Core/Src/ili9341.c ****   ili9341_WriteData(0x15);
+ 166:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_VCOM2);
+ 167:Core/Src/ili9341.c ****   ili9341_WriteData(0x90);
+ 168:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_MAC);
+ 169:Core/Src/ili9341.c ****   ili9341_WriteData(0xC8);
+ 170:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_3GAMMA_EN);
+ 171:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 172:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_RGB_INTERFACE);
+ 173:Core/Src/ili9341.c ****   ili9341_WriteData(0xC2);
+ 174:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DFC);
+ 175:Core/Src/ili9341.c ****   ili9341_WriteData(0x0A);
+ 176:Core/Src/ili9341.c ****   ili9341_WriteData(0xA7);
+ 177:Core/Src/ili9341.c ****   ili9341_WriteData(0x27);
+ 178:Core/Src/ili9341.c ****   ili9341_WriteData(0x04);
+ 179:Core/Src/ili9341.c ****   
+ 180:Core/Src/ili9341.c ****   /* Colomn address set */
+ 181:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_COLUMN_ADDR);
+ 182:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 183:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 184:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 185:Core/Src/ili9341.c ****   ili9341_WriteData(0xEF);
+ 186:Core/Src/ili9341.c ****   /* Page address set */
+ 187:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_PAGE_ADDR);
+ 188:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 189:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 190:Core/Src/ili9341.c ****   ili9341_WriteData(0x01);
+ 191:Core/Src/ili9341.c ****   ili9341_WriteData(0x3F);
+ 192:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_INTERFACE);
+ 193:Core/Src/ili9341.c ****   ili9341_WriteData(0x01);
+ 194:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 195:Core/Src/ili9341.c ****   ili9341_WriteData(0x06);
+ 196:Core/Src/ili9341.c ****   
+ 197:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_GRAM);
+ 198:Core/Src/ili9341.c ****   LCD_Delay(200);
+ 199:Core/Src/ili9341.c ****   
+ 200:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_GAMMA);
+ARM GAS  /tmp/cc1cDCDG.s 			page 5
+
+
+ 201:Core/Src/ili9341.c ****   ili9341_WriteData(0x01);
+ 202:Core/Src/ili9341.c ****   
+ 203:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_PGAMMA);
+ 204:Core/Src/ili9341.c ****   ili9341_WriteData(0x0F);
+ 205:Core/Src/ili9341.c ****   ili9341_WriteData(0x29);
+ 206:Core/Src/ili9341.c ****   ili9341_WriteData(0x24);
+ 207:Core/Src/ili9341.c ****   ili9341_WriteData(0x0C);
+ 208:Core/Src/ili9341.c ****   ili9341_WriteData(0x0E);
+ 209:Core/Src/ili9341.c ****   ili9341_WriteData(0x09);
+ 210:Core/Src/ili9341.c ****   ili9341_WriteData(0x4E);
+ 211:Core/Src/ili9341.c ****   ili9341_WriteData(0x78);
+ 212:Core/Src/ili9341.c ****   ili9341_WriteData(0x3C);
+ 213:Core/Src/ili9341.c ****   ili9341_WriteData(0x09);
+ 214:Core/Src/ili9341.c ****   ili9341_WriteData(0x13);
+ 215:Core/Src/ili9341.c ****   ili9341_WriteData(0x05);
+ 216:Core/Src/ili9341.c ****   ili9341_WriteData(0x17);
+ 217:Core/Src/ili9341.c ****   ili9341_WriteData(0x11);
+ 218:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 219:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_NGAMMA);
+ 220:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 221:Core/Src/ili9341.c ****   ili9341_WriteData(0x16);
+ 222:Core/Src/ili9341.c ****   ili9341_WriteData(0x1B);
+ 223:Core/Src/ili9341.c ****   ili9341_WriteData(0x04);
+ 224:Core/Src/ili9341.c ****   ili9341_WriteData(0x11);
+ 225:Core/Src/ili9341.c ****   ili9341_WriteData(0x07);
+ 226:Core/Src/ili9341.c ****   ili9341_WriteData(0x31);
+ 227:Core/Src/ili9341.c ****   ili9341_WriteData(0x33);
+ 228:Core/Src/ili9341.c ****   ili9341_WriteData(0x42);
+ 229:Core/Src/ili9341.c ****   ili9341_WriteData(0x05);
+ 230:Core/Src/ili9341.c ****   ili9341_WriteData(0x0C);
+ 231:Core/Src/ili9341.c ****   ili9341_WriteData(0x0A);
+ 232:Core/Src/ili9341.c ****   ili9341_WriteData(0x28);
+ 233:Core/Src/ili9341.c ****   ili9341_WriteData(0x2F);
+ 234:Core/Src/ili9341.c ****   ili9341_WriteData(0x0F);
+ 235:Core/Src/ili9341.c ****   
+ 236:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_SLEEP_OUT);
+ 237:Core/Src/ili9341.c ****   LCD_Delay(200);
+ 238:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DISPLAY_ON);
+ 239:Core/Src/ili9341.c ****   /* GRAM start writing */
+ 240:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_GRAM);
+ 241:Core/Src/ili9341.c **** }
+ 242:Core/Src/ili9341.c **** 
+ 243:Core/Src/ili9341.c **** /**
+ 244:Core/Src/ili9341.c ****   * @brief  Disables the Display.
+ 245:Core/Src/ili9341.c ****   * @param  None
+ 246:Core/Src/ili9341.c ****   * @retval LCD Register Value.
+ 247:Core/Src/ili9341.c ****   */
+ 248:Core/Src/ili9341.c **** uint16_t ili9341_ReadID(void)
+ 249:Core/Src/ili9341.c **** {
+ 250:Core/Src/ili9341.c ****   LCD_IO_Init();
+ 251:Core/Src/ili9341.c ****   return ((uint16_t)ili9341_ReadData(LCD_READ_ID4, LCD_READ_ID4_SIZE));
+ 252:Core/Src/ili9341.c **** }
+ 253:Core/Src/ili9341.c **** 
+ 254:Core/Src/ili9341.c **** /**
+ 255:Core/Src/ili9341.c ****   * @brief  Enables the Display.
+ 256:Core/Src/ili9341.c ****   * @param  None
+ 257:Core/Src/ili9341.c ****   * @retval None
+ARM GAS  /tmp/cc1cDCDG.s 			page 6
+
+
+ 258:Core/Src/ili9341.c ****   */
+ 259:Core/Src/ili9341.c **** void ili9341_DisplayOn(void)
+ 260:Core/Src/ili9341.c **** {
+ 261:Core/Src/ili9341.c ****   /* Display On */
+ 262:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DISPLAY_ON);
+ 263:Core/Src/ili9341.c **** }
+ 264:Core/Src/ili9341.c **** 
+ 265:Core/Src/ili9341.c **** /**
+ 266:Core/Src/ili9341.c ****   * @brief  Disables the Display.
+ 267:Core/Src/ili9341.c ****   * @param  None
+ 268:Core/Src/ili9341.c ****   * @retval None
+ 269:Core/Src/ili9341.c ****   */
+ 270:Core/Src/ili9341.c **** void ili9341_DisplayOff(void)
+ 271:Core/Src/ili9341.c **** {
+ 272:Core/Src/ili9341.c ****   /* Display Off */
+ 273:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DISPLAY_OFF);
+ 274:Core/Src/ili9341.c **** }
+ 275:Core/Src/ili9341.c **** 
+ 276:Core/Src/ili9341.c **** /**
+ 277:Core/Src/ili9341.c ****   * @brief  Writes  to the selected LCD register.
+ 278:Core/Src/ili9341.c ****   * @param  LCD_Reg: address of the selected register.
+ 279:Core/Src/ili9341.c ****   * @retval None
+ 280:Core/Src/ili9341.c ****   */
+ 281:Core/Src/ili9341.c **** void ili9341_WriteReg(uint8_t LCD_Reg)
+ 282:Core/Src/ili9341.c **** {
+ 283:Core/Src/ili9341.c ****   LCD_IO_WriteReg(LCD_Reg);
+ 284:Core/Src/ili9341.c **** }
+ 285:Core/Src/ili9341.c **** 
+ 286:Core/Src/ili9341.c **** /**
+ 287:Core/Src/ili9341.c ****   * @brief  Writes data to the selected LCD register.
+ 288:Core/Src/ili9341.c ****   * @param  LCD_Reg: address of the selected register.
+ 289:Core/Src/ili9341.c ****   * @retval None
+ 290:Core/Src/ili9341.c ****   */
+ 291:Core/Src/ili9341.c **** void ili9341_WriteData(uint16_t RegValue)
+ 292:Core/Src/ili9341.c **** {
+ 293:Core/Src/ili9341.c ****   LCD_IO_WriteData(RegValue);
+ 294:Core/Src/ili9341.c **** }
+ 295:Core/Src/ili9341.c **** 
+ 296:Core/Src/ili9341.c **** /**
+ 297:Core/Src/ili9341.c ****   * @brief  Reads the selected LCD Register.
+ 298:Core/Src/ili9341.c ****   * @param  RegValue: Address of the register to read
+ 299:Core/Src/ili9341.c ****   * @param  ReadSize: Number of bytes to read
+ 300:Core/Src/ili9341.c ****   * @retval LCD Register Value.
+ 301:Core/Src/ili9341.c ****   */
+ 302:Core/Src/ili9341.c **** uint32_t ili9341_ReadData(uint16_t RegValue, uint8_t ReadSize)
+ 303:Core/Src/ili9341.c **** {
+ 304:Core/Src/ili9341.c ****   /* Read a max of 4 bytes */
+ 305:Core/Src/ili9341.c ****   return (LCD_IO_ReadData(RegValue, ReadSize));
+ 306:Core/Src/ili9341.c **** }
+ 307:Core/Src/ili9341.c **** 
+ 308:Core/Src/ili9341.c **** /**
+ 309:Core/Src/ili9341.c ****   * @brief  Get LCD PIXEL WIDTH.
+ 310:Core/Src/ili9341.c ****   * @param  None
+ 311:Core/Src/ili9341.c ****   * @retval LCD PIXEL WIDTH.
+ 312:Core/Src/ili9341.c ****   */
+ 313:Core/Src/ili9341.c **** uint16_t ili9341_GetLcdPixelWidth(void)
+ 314:Core/Src/ili9341.c **** {
+ARM GAS  /tmp/cc1cDCDG.s 			page 7
+
+
+  30              		.loc 1 314 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+ 315:Core/Src/ili9341.c ****   /* Return LCD PIXEL WIDTH */
+ 316:Core/Src/ili9341.c ****   return ILI9341_LCD_PIXEL_WIDTH;
+  35              		.loc 1 316 3 view .LVU1
+ 317:Core/Src/ili9341.c **** }
+  36              		.loc 1 317 1 is_stmt 0 view .LVU2
+  37 0000 F020     		movs	r0, #240
+  38 0002 7047     		bx	lr
+  39              		.cfi_endproc
+  40              	.LFE7:
+  42              		.section	.text.ili9341_GetLcdPixelHeight,"ax",%progbits
+  43              		.align	1
+  44              		.p2align 2,,3
+  45              		.global	ili9341_GetLcdPixelHeight
+  46              		.syntax unified
+  47              		.thumb
+  48              		.thumb_func
+  50              	ili9341_GetLcdPixelHeight:
+  51              	.LFB8:
+ 318:Core/Src/ili9341.c **** 
+ 319:Core/Src/ili9341.c **** /**
+ 320:Core/Src/ili9341.c ****   * @brief  Get LCD PIXEL HEIGHT.
+ 321:Core/Src/ili9341.c ****   * @param  None
+ 322:Core/Src/ili9341.c ****   * @retval LCD PIXEL HEIGHT.
+ 323:Core/Src/ili9341.c ****   */
+ 324:Core/Src/ili9341.c **** uint16_t ili9341_GetLcdPixelHeight(void)
+ 325:Core/Src/ili9341.c **** {
+  52              		.loc 1 325 1 is_stmt 1 view -0
+  53              		.cfi_startproc
+  54              		@ args = 0, pretend = 0, frame = 0
+  55              		@ frame_needed = 0, uses_anonymous_args = 0
+  56              		@ link register save eliminated.
+ 326:Core/Src/ili9341.c ****   /* Return LCD PIXEL HEIGHT */
+ 327:Core/Src/ili9341.c ****   return ILI9341_LCD_PIXEL_HEIGHT;
+  57              		.loc 1 327 3 view .LVU4
+ 328:Core/Src/ili9341.c **** }
+  58              		.loc 1 328 1 is_stmt 0 view .LVU5
+  59 0000 4FF4A070 		mov	r0, #320
+  60 0004 7047     		bx	lr
+  61              		.cfi_endproc
+  62              	.LFE8:
+  64 0006 00BF     		.section	.text.ili9341_DisplayOn,"ax",%progbits
+  65              		.align	1
+  66              		.p2align 2,,3
+  67              		.global	ili9341_DisplayOn
+  68              		.syntax unified
+  69              		.thumb
+  70              		.thumb_func
+  72              	ili9341_DisplayOn:
+  73              	.LFB2:
+ 260:Core/Src/ili9341.c ****   /* Display On */
+  74              		.loc 1 260 1 is_stmt 1 view -0
+  75              		.cfi_startproc
+ARM GAS  /tmp/cc1cDCDG.s 			page 8
+
+
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+ 262:Core/Src/ili9341.c **** }
+  79              		.loc 1 262 3 view .LVU7
+  80              	.LVL0:
+  81              	.LBB220:
+  82              	.LBI220:
+ 281:Core/Src/ili9341.c **** {
+  83              		.loc 1 281 6 view .LVU8
+  84              	.LBB221:
+ 283:Core/Src/ili9341.c **** }
+  85              		.loc 1 283 3 view .LVU9
+  86 0000 2920     		movs	r0, #41
+  87 0002 FFF7FEBF 		b	LCD_IO_WriteReg
+  88              	.LVL1:
+  89              	.LBE221:
+  90              	.LBE220:
+  91              		.cfi_endproc
+  92              	.LFE2:
+  94 0006 00BF     		.section	.text.ili9341_DisplayOff,"ax",%progbits
+  95              		.align	1
+  96              		.p2align 2,,3
+  97              		.global	ili9341_DisplayOff
+  98              		.syntax unified
+  99              		.thumb
+ 100              		.thumb_func
+ 102              	ili9341_DisplayOff:
+ 103              	.LFB3:
+ 271:Core/Src/ili9341.c ****   /* Display Off */
+ 104              		.loc 1 271 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+ 273:Core/Src/ili9341.c **** }
+ 109              		.loc 1 273 3 view .LVU11
+ 110              	.LVL2:
+ 111              	.LBB222:
+ 112              	.LBI222:
+ 281:Core/Src/ili9341.c **** {
+ 113              		.loc 1 281 6 view .LVU12
+ 114              	.LBB223:
+ 283:Core/Src/ili9341.c **** }
+ 115              		.loc 1 283 3 view .LVU13
+ 116 0000 2820     		movs	r0, #40
+ 117 0002 FFF7FEBF 		b	LCD_IO_WriteReg
+ 118              	.LVL3:
+ 119              	.LBE223:
+ 120              	.LBE222:
+ 121              		.cfi_endproc
+ 122              	.LFE3:
+ 124 0006 00BF     		.section	.text.ili9341_Init,"ax",%progbits
+ 125              		.align	1
+ 126              		.p2align 2,,3
+ 127              		.global	ili9341_Init
+ 128              		.syntax unified
+ARM GAS  /tmp/cc1cDCDG.s 			page 9
+
+
+ 129              		.thumb
+ 130              		.thumb_func
+ 132              	ili9341_Init:
+ 133              	.LFB0:
+ 120:Core/Src/ili9341.c ****   /* Initialize ILI9341 low level bus layer ----------------------------------*/
+ 134              		.loc 1 120 1 view -0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122:Core/Src/ili9341.c ****   
+ 138              		.loc 1 122 3 view .LVU15
+ 120:Core/Src/ili9341.c ****   /* Initialize ILI9341 low level bus layer ----------------------------------*/
+ 139              		.loc 1 120 1 is_stmt 0 view .LVU16
+ 140 0000 08B5     		push	{r3, lr}
+ 141              	.LCFI0:
+ 142              		.cfi_def_cfa_offset 8
+ 143              		.cfi_offset 3, -8
+ 144              		.cfi_offset 14, -4
+ 122:Core/Src/ili9341.c ****   
+ 145              		.loc 1 122 3 view .LVU17
+ 146 0002 FFF7FEFF 		bl	LCD_IO_Init
+ 147              	.LVL4:
+ 125:Core/Src/ili9341.c ****   ili9341_WriteData(0xC3);
+ 148              		.loc 1 125 3 is_stmt 1 view .LVU18
+ 149              	.LBB224:
+ 150              	.LBI224:
+ 281:Core/Src/ili9341.c **** {
+ 151              		.loc 1 281 6 view .LVU19
+ 152              	.LBB225:
+ 283:Core/Src/ili9341.c **** }
+ 153              		.loc 1 283 3 view .LVU20
+ 154 0006 CA20     		movs	r0, #202
+ 155 0008 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 156              	.LVL5:
+ 283:Core/Src/ili9341.c **** }
+ 157              		.loc 1 283 3 is_stmt 0 view .LVU21
+ 158              	.LBE225:
+ 159              	.LBE224:
+ 126:Core/Src/ili9341.c ****   ili9341_WriteData(0x08);
+ 160              		.loc 1 126 3 is_stmt 1 view .LVU22
+ 161              	.LBB226:
+ 162              	.LBI226:
+ 291:Core/Src/ili9341.c **** {
+ 163              		.loc 1 291 6 view .LVU23
+ 164              	.LBB227:
+ 293:Core/Src/ili9341.c **** }
+ 165              		.loc 1 293 3 view .LVU24
+ 166 000c C320     		movs	r0, #195
+ 167 000e FFF7FEFF 		bl	LCD_IO_WriteData
+ 168              	.LVL6:
+ 293:Core/Src/ili9341.c **** }
+ 169              		.loc 1 293 3 is_stmt 0 view .LVU25
+ 170              	.LBE227:
+ 171              	.LBE226:
+ 127:Core/Src/ili9341.c ****   ili9341_WriteData(0x50);
+ 172              		.loc 1 127 3 is_stmt 1 view .LVU26
+ 173              	.LBB228:
+ARM GAS  /tmp/cc1cDCDG.s 			page 10
+
+
+ 174              	.LBI228:
+ 291:Core/Src/ili9341.c **** {
+ 175              		.loc 1 291 6 view .LVU27
+ 176              	.LBB229:
+ 293:Core/Src/ili9341.c **** }
+ 177              		.loc 1 293 3 view .LVU28
+ 178 0012 0820     		movs	r0, #8
+ 179 0014 FFF7FEFF 		bl	LCD_IO_WriteData
+ 180              	.LVL7:
+ 293:Core/Src/ili9341.c **** }
+ 181              		.loc 1 293 3 is_stmt 0 view .LVU29
+ 182              	.LBE229:
+ 183              	.LBE228:
+ 128:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWERB);
+ 184              		.loc 1 128 3 is_stmt 1 view .LVU30
+ 185              	.LBB230:
+ 186              	.LBI230:
+ 291:Core/Src/ili9341.c **** {
+ 187              		.loc 1 291 6 view .LVU31
+ 188              	.LBB231:
+ 293:Core/Src/ili9341.c **** }
+ 189              		.loc 1 293 3 view .LVU32
+ 190 0018 5020     		movs	r0, #80
+ 191 001a FFF7FEFF 		bl	LCD_IO_WriteData
+ 192              	.LVL8:
+ 293:Core/Src/ili9341.c **** }
+ 193              		.loc 1 293 3 is_stmt 0 view .LVU33
+ 194              	.LBE231:
+ 195              	.LBE230:
+ 129:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 196              		.loc 1 129 3 is_stmt 1 view .LVU34
+ 197              	.LBB232:
+ 198              	.LBI232:
+ 281:Core/Src/ili9341.c **** {
+ 199              		.loc 1 281 6 view .LVU35
+ 200              	.LBB233:
+ 283:Core/Src/ili9341.c **** }
+ 201              		.loc 1 283 3 view .LVU36
+ 202 001e CF20     		movs	r0, #207
+ 203 0020 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 204              	.LVL9:
+ 283:Core/Src/ili9341.c **** }
+ 205              		.loc 1 283 3 is_stmt 0 view .LVU37
+ 206              	.LBE233:
+ 207              	.LBE232:
+ 130:Core/Src/ili9341.c ****   ili9341_WriteData(0xC1);
+ 208              		.loc 1 130 3 is_stmt 1 view .LVU38
+ 209              	.LBB234:
+ 210              	.LBI234:
+ 291:Core/Src/ili9341.c **** {
+ 211              		.loc 1 291 6 view .LVU39
+ 212              	.LBB235:
+ 293:Core/Src/ili9341.c **** }
+ 213              		.loc 1 293 3 view .LVU40
+ 214 0024 0020     		movs	r0, #0
+ 215 0026 FFF7FEFF 		bl	LCD_IO_WriteData
+ 216              	.LVL10:
+ARM GAS  /tmp/cc1cDCDG.s 			page 11
+
+
+ 293:Core/Src/ili9341.c **** }
+ 217              		.loc 1 293 3 is_stmt 0 view .LVU41
+ 218              	.LBE235:
+ 219              	.LBE234:
+ 131:Core/Src/ili9341.c ****   ili9341_WriteData(0x30);
+ 220              		.loc 1 131 3 is_stmt 1 view .LVU42
+ 221              	.LBB236:
+ 222              	.LBI236:
+ 291:Core/Src/ili9341.c **** {
+ 223              		.loc 1 291 6 view .LVU43
+ 224              	.LBB237:
+ 293:Core/Src/ili9341.c **** }
+ 225              		.loc 1 293 3 view .LVU44
+ 226 002a C120     		movs	r0, #193
+ 227 002c FFF7FEFF 		bl	LCD_IO_WriteData
+ 228              	.LVL11:
+ 293:Core/Src/ili9341.c **** }
+ 229              		.loc 1 293 3 is_stmt 0 view .LVU45
+ 230              	.LBE237:
+ 231              	.LBE236:
+ 132:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWER_SEQ);
+ 232              		.loc 1 132 3 is_stmt 1 view .LVU46
+ 233              	.LBB238:
+ 234              	.LBI238:
+ 291:Core/Src/ili9341.c **** {
+ 235              		.loc 1 291 6 view .LVU47
+ 236              	.LBB239:
+ 293:Core/Src/ili9341.c **** }
+ 237              		.loc 1 293 3 view .LVU48
+ 238 0030 3020     		movs	r0, #48
+ 239 0032 FFF7FEFF 		bl	LCD_IO_WriteData
+ 240              	.LVL12:
+ 293:Core/Src/ili9341.c **** }
+ 241              		.loc 1 293 3 is_stmt 0 view .LVU49
+ 242              	.LBE239:
+ 243              	.LBE238:
+ 133:Core/Src/ili9341.c ****   ili9341_WriteData(0x64);
+ 244              		.loc 1 133 3 is_stmt 1 view .LVU50
+ 245              	.LBB240:
+ 246              	.LBI240:
+ 281:Core/Src/ili9341.c **** {
+ 247              		.loc 1 281 6 view .LVU51
+ 248              	.LBB241:
+ 283:Core/Src/ili9341.c **** }
+ 249              		.loc 1 283 3 view .LVU52
+ 250 0036 ED20     		movs	r0, #237
+ 251 0038 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 252              	.LVL13:
+ 283:Core/Src/ili9341.c **** }
+ 253              		.loc 1 283 3 is_stmt 0 view .LVU53
+ 254              	.LBE241:
+ 255              	.LBE240:
+ 134:Core/Src/ili9341.c ****   ili9341_WriteData(0x03);
+ 256              		.loc 1 134 3 is_stmt 1 view .LVU54
+ 257              	.LBB242:
+ 258              	.LBI242:
+ 291:Core/Src/ili9341.c **** {
+ARM GAS  /tmp/cc1cDCDG.s 			page 12
+
+
+ 259              		.loc 1 291 6 view .LVU55
+ 260              	.LBB243:
+ 293:Core/Src/ili9341.c **** }
+ 261              		.loc 1 293 3 view .LVU56
+ 262 003c 6420     		movs	r0, #100
+ 263 003e FFF7FEFF 		bl	LCD_IO_WriteData
+ 264              	.LVL14:
+ 293:Core/Src/ili9341.c **** }
+ 265              		.loc 1 293 3 is_stmt 0 view .LVU57
+ 266              	.LBE243:
+ 267              	.LBE242:
+ 135:Core/Src/ili9341.c ****   ili9341_WriteData(0x12);
+ 268              		.loc 1 135 3 is_stmt 1 view .LVU58
+ 269              	.LBB244:
+ 270              	.LBI244:
+ 291:Core/Src/ili9341.c **** {
+ 271              		.loc 1 291 6 view .LVU59
+ 272              	.LBB245:
+ 293:Core/Src/ili9341.c **** }
+ 273              		.loc 1 293 3 view .LVU60
+ 274 0042 0320     		movs	r0, #3
+ 275 0044 FFF7FEFF 		bl	LCD_IO_WriteData
+ 276              	.LVL15:
+ 293:Core/Src/ili9341.c **** }
+ 277              		.loc 1 293 3 is_stmt 0 view .LVU61
+ 278              	.LBE245:
+ 279              	.LBE244:
+ 136:Core/Src/ili9341.c ****   ili9341_WriteData(0x81);
+ 280              		.loc 1 136 3 is_stmt 1 view .LVU62
+ 281              	.LBB246:
+ 282              	.LBI246:
+ 291:Core/Src/ili9341.c **** {
+ 283              		.loc 1 291 6 view .LVU63
+ 284              	.LBB247:
+ 293:Core/Src/ili9341.c **** }
+ 285              		.loc 1 293 3 view .LVU64
+ 286 0048 1220     		movs	r0, #18
+ 287 004a FFF7FEFF 		bl	LCD_IO_WriteData
+ 288              	.LVL16:
+ 293:Core/Src/ili9341.c **** }
+ 289              		.loc 1 293 3 is_stmt 0 view .LVU65
+ 290              	.LBE247:
+ 291              	.LBE246:
+ 137:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DTCA);
+ 292              		.loc 1 137 3 is_stmt 1 view .LVU66
+ 293              	.LBB248:
+ 294              	.LBI248:
+ 291:Core/Src/ili9341.c **** {
+ 295              		.loc 1 291 6 view .LVU67
+ 296              	.LBB249:
+ 293:Core/Src/ili9341.c **** }
+ 297              		.loc 1 293 3 view .LVU68
+ 298 004e 8120     		movs	r0, #129
+ 299 0050 FFF7FEFF 		bl	LCD_IO_WriteData
+ 300              	.LVL17:
+ 293:Core/Src/ili9341.c **** }
+ 301              		.loc 1 293 3 is_stmt 0 view .LVU69
+ARM GAS  /tmp/cc1cDCDG.s 			page 13
+
+
+ 302              	.LBE249:
+ 303              	.LBE248:
+ 138:Core/Src/ili9341.c ****   ili9341_WriteData(0x85);
+ 304              		.loc 1 138 3 is_stmt 1 view .LVU70
+ 305              	.LBB250:
+ 306              	.LBI250:
+ 281:Core/Src/ili9341.c **** {
+ 307              		.loc 1 281 6 view .LVU71
+ 308              	.LBB251:
+ 283:Core/Src/ili9341.c **** }
+ 309              		.loc 1 283 3 view .LVU72
+ 310 0054 E820     		movs	r0, #232
+ 311 0056 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 312              	.LVL18:
+ 283:Core/Src/ili9341.c **** }
+ 313              		.loc 1 283 3 is_stmt 0 view .LVU73
+ 314              	.LBE251:
+ 315              	.LBE250:
+ 139:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 316              		.loc 1 139 3 is_stmt 1 view .LVU74
+ 317              	.LBB252:
+ 318              	.LBI252:
+ 291:Core/Src/ili9341.c **** {
+ 319              		.loc 1 291 6 view .LVU75
+ 320              	.LBB253:
+ 293:Core/Src/ili9341.c **** }
+ 321              		.loc 1 293 3 view .LVU76
+ 322 005a 8520     		movs	r0, #133
+ 323 005c FFF7FEFF 		bl	LCD_IO_WriteData
+ 324              	.LVL19:
+ 293:Core/Src/ili9341.c **** }
+ 325              		.loc 1 293 3 is_stmt 0 view .LVU77
+ 326              	.LBE253:
+ 327              	.LBE252:
+ 140:Core/Src/ili9341.c ****   ili9341_WriteData(0x78);
+ 328              		.loc 1 140 3 is_stmt 1 view .LVU78
+ 329              	.LBB254:
+ 330              	.LBI254:
+ 291:Core/Src/ili9341.c **** {
+ 331              		.loc 1 291 6 view .LVU79
+ 332              	.LBB255:
+ 293:Core/Src/ili9341.c **** }
+ 333              		.loc 1 293 3 view .LVU80
+ 334 0060 0020     		movs	r0, #0
+ 335 0062 FFF7FEFF 		bl	LCD_IO_WriteData
+ 336              	.LVL20:
+ 293:Core/Src/ili9341.c **** }
+ 337              		.loc 1 293 3 is_stmt 0 view .LVU81
+ 338              	.LBE255:
+ 339              	.LBE254:
+ 141:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWERA);
+ 340              		.loc 1 141 3 is_stmt 1 view .LVU82
+ 341              	.LBB256:
+ 342              	.LBI256:
+ 291:Core/Src/ili9341.c **** {
+ 343              		.loc 1 291 6 view .LVU83
+ 344              	.LBB257:
+ARM GAS  /tmp/cc1cDCDG.s 			page 14
+
+
+ 293:Core/Src/ili9341.c **** }
+ 345              		.loc 1 293 3 view .LVU84
+ 346 0066 7820     		movs	r0, #120
+ 347 0068 FFF7FEFF 		bl	LCD_IO_WriteData
+ 348              	.LVL21:
+ 293:Core/Src/ili9341.c **** }
+ 349              		.loc 1 293 3 is_stmt 0 view .LVU85
+ 350              	.LBE257:
+ 351              	.LBE256:
+ 142:Core/Src/ili9341.c ****   ili9341_WriteData(0x39);
+ 352              		.loc 1 142 3 is_stmt 1 view .LVU86
+ 353              	.LBB258:
+ 354              	.LBI258:
+ 281:Core/Src/ili9341.c **** {
+ 355              		.loc 1 281 6 view .LVU87
+ 356              	.LBB259:
+ 283:Core/Src/ili9341.c **** }
+ 357              		.loc 1 283 3 view .LVU88
+ 358 006c CB20     		movs	r0, #203
+ 359 006e FFF7FEFF 		bl	LCD_IO_WriteReg
+ 360              	.LVL22:
+ 283:Core/Src/ili9341.c **** }
+ 361              		.loc 1 283 3 is_stmt 0 view .LVU89
+ 362              	.LBE259:
+ 363              	.LBE258:
+ 143:Core/Src/ili9341.c ****   ili9341_WriteData(0x2C);
+ 364              		.loc 1 143 3 is_stmt 1 view .LVU90
+ 365              	.LBB260:
+ 366              	.LBI260:
+ 291:Core/Src/ili9341.c **** {
+ 367              		.loc 1 291 6 view .LVU91
+ 368              	.LBB261:
+ 293:Core/Src/ili9341.c **** }
+ 369              		.loc 1 293 3 view .LVU92
+ 370 0072 3920     		movs	r0, #57
+ 371 0074 FFF7FEFF 		bl	LCD_IO_WriteData
+ 372              	.LVL23:
+ 293:Core/Src/ili9341.c **** }
+ 373              		.loc 1 293 3 is_stmt 0 view .LVU93
+ 374              	.LBE261:
+ 375              	.LBE260:
+ 144:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 376              		.loc 1 144 3 is_stmt 1 view .LVU94
+ 377              	.LBB262:
+ 378              	.LBI262:
+ 291:Core/Src/ili9341.c **** {
+ 379              		.loc 1 291 6 view .LVU95
+ 380              	.LBB263:
+ 293:Core/Src/ili9341.c **** }
+ 381              		.loc 1 293 3 view .LVU96
+ 382 0078 2C20     		movs	r0, #44
+ 383 007a FFF7FEFF 		bl	LCD_IO_WriteData
+ 384              	.LVL24:
+ 293:Core/Src/ili9341.c **** }
+ 385              		.loc 1 293 3 is_stmt 0 view .LVU97
+ 386              	.LBE263:
+ 387              	.LBE262:
+ARM GAS  /tmp/cc1cDCDG.s 			page 15
+
+
+ 145:Core/Src/ili9341.c ****   ili9341_WriteData(0x34);
+ 388              		.loc 1 145 3 is_stmt 1 view .LVU98
+ 389              	.LBB264:
+ 390              	.LBI264:
+ 291:Core/Src/ili9341.c **** {
+ 391              		.loc 1 291 6 view .LVU99
+ 392              	.LBB265:
+ 293:Core/Src/ili9341.c **** }
+ 393              		.loc 1 293 3 view .LVU100
+ 394 007e 0020     		movs	r0, #0
+ 395 0080 FFF7FEFF 		bl	LCD_IO_WriteData
+ 396              	.LVL25:
+ 293:Core/Src/ili9341.c **** }
+ 397              		.loc 1 293 3 is_stmt 0 view .LVU101
+ 398              	.LBE265:
+ 399              	.LBE264:
+ 146:Core/Src/ili9341.c ****   ili9341_WriteData(0x02);
+ 400              		.loc 1 146 3 is_stmt 1 view .LVU102
+ 401              	.LBB266:
+ 402              	.LBI266:
+ 291:Core/Src/ili9341.c **** {
+ 403              		.loc 1 291 6 view .LVU103
+ 404              	.LBB267:
+ 293:Core/Src/ili9341.c **** }
+ 405              		.loc 1 293 3 view .LVU104
+ 406 0084 3420     		movs	r0, #52
+ 407 0086 FFF7FEFF 		bl	LCD_IO_WriteData
+ 408              	.LVL26:
+ 293:Core/Src/ili9341.c **** }
+ 409              		.loc 1 293 3 is_stmt 0 view .LVU105
+ 410              	.LBE267:
+ 411              	.LBE266:
+ 147:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_PRC);
+ 412              		.loc 1 147 3 is_stmt 1 view .LVU106
+ 413              	.LBB268:
+ 414              	.LBI268:
+ 291:Core/Src/ili9341.c **** {
+ 415              		.loc 1 291 6 view .LVU107
+ 416              	.LBB269:
+ 293:Core/Src/ili9341.c **** }
+ 417              		.loc 1 293 3 view .LVU108
+ 418 008a 0220     		movs	r0, #2
+ 419 008c FFF7FEFF 		bl	LCD_IO_WriteData
+ 420              	.LVL27:
+ 293:Core/Src/ili9341.c **** }
+ 421              		.loc 1 293 3 is_stmt 0 view .LVU109
+ 422              	.LBE269:
+ 423              	.LBE268:
+ 148:Core/Src/ili9341.c ****   ili9341_WriteData(0x20);
+ 424              		.loc 1 148 3 is_stmt 1 view .LVU110
+ 425              	.LBB270:
+ 426              	.LBI270:
+ 281:Core/Src/ili9341.c **** {
+ 427              		.loc 1 281 6 view .LVU111
+ 428              	.LBB271:
+ 283:Core/Src/ili9341.c **** }
+ 429              		.loc 1 283 3 view .LVU112
+ARM GAS  /tmp/cc1cDCDG.s 			page 16
+
+
+ 430 0090 F720     		movs	r0, #247
+ 431 0092 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 432              	.LVL28:
+ 283:Core/Src/ili9341.c **** }
+ 433              		.loc 1 283 3 is_stmt 0 view .LVU113
+ 434              	.LBE271:
+ 435              	.LBE270:
+ 149:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DTCB);
+ 436              		.loc 1 149 3 is_stmt 1 view .LVU114
+ 437              	.LBB272:
+ 438              	.LBI272:
+ 291:Core/Src/ili9341.c **** {
+ 439              		.loc 1 291 6 view .LVU115
+ 440              	.LBB273:
+ 293:Core/Src/ili9341.c **** }
+ 441              		.loc 1 293 3 view .LVU116
+ 442 0096 2020     		movs	r0, #32
+ 443 0098 FFF7FEFF 		bl	LCD_IO_WriteData
+ 444              	.LVL29:
+ 293:Core/Src/ili9341.c **** }
+ 445              		.loc 1 293 3 is_stmt 0 view .LVU117
+ 446              	.LBE273:
+ 447              	.LBE272:
+ 150:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 448              		.loc 1 150 3 is_stmt 1 view .LVU118
+ 449              	.LBB274:
+ 450              	.LBI274:
+ 281:Core/Src/ili9341.c **** {
+ 451              		.loc 1 281 6 view .LVU119
+ 452              	.LBB275:
+ 283:Core/Src/ili9341.c **** }
+ 453              		.loc 1 283 3 view .LVU120
+ 454 009c EA20     		movs	r0, #234
+ 455 009e FFF7FEFF 		bl	LCD_IO_WriteReg
+ 456              	.LVL30:
+ 283:Core/Src/ili9341.c **** }
+ 457              		.loc 1 283 3 is_stmt 0 view .LVU121
+ 458              	.LBE275:
+ 459              	.LBE274:
+ 151:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 460              		.loc 1 151 3 is_stmt 1 view .LVU122
+ 461              	.LBB276:
+ 462              	.LBI276:
+ 291:Core/Src/ili9341.c **** {
+ 463              		.loc 1 291 6 view .LVU123
+ 464              	.LBB277:
+ 293:Core/Src/ili9341.c **** }
+ 465              		.loc 1 293 3 view .LVU124
+ 466 00a2 0020     		movs	r0, #0
+ 467 00a4 FFF7FEFF 		bl	LCD_IO_WriteData
+ 468              	.LVL31:
+ 293:Core/Src/ili9341.c **** }
+ 469              		.loc 1 293 3 is_stmt 0 view .LVU125
+ 470              	.LBE277:
+ 471              	.LBE276:
+ 152:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_FRMCTR1);
+ 472              		.loc 1 152 3 is_stmt 1 view .LVU126
+ARM GAS  /tmp/cc1cDCDG.s 			page 17
+
+
+ 473              	.LBB278:
+ 474              	.LBI278:
+ 291:Core/Src/ili9341.c **** {
+ 475              		.loc 1 291 6 view .LVU127
+ 476              	.LBB279:
+ 293:Core/Src/ili9341.c **** }
+ 477              		.loc 1 293 3 view .LVU128
+ 478 00a8 0020     		movs	r0, #0
+ 479 00aa FFF7FEFF 		bl	LCD_IO_WriteData
+ 480              	.LVL32:
+ 293:Core/Src/ili9341.c **** }
+ 481              		.loc 1 293 3 is_stmt 0 view .LVU129
+ 482              	.LBE279:
+ 483              	.LBE278:
+ 153:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 484              		.loc 1 153 3 is_stmt 1 view .LVU130
+ 485              	.LBB280:
+ 486              	.LBI280:
+ 281:Core/Src/ili9341.c **** {
+ 487              		.loc 1 281 6 view .LVU131
+ 488              	.LBB281:
+ 283:Core/Src/ili9341.c **** }
+ 489              		.loc 1 283 3 view .LVU132
+ 490 00ae B120     		movs	r0, #177
+ 491 00b0 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 492              	.LVL33:
+ 283:Core/Src/ili9341.c **** }
+ 493              		.loc 1 283 3 is_stmt 0 view .LVU133
+ 494              	.LBE281:
+ 495              	.LBE280:
+ 154:Core/Src/ili9341.c ****   ili9341_WriteData(0x1B);
+ 496              		.loc 1 154 3 is_stmt 1 view .LVU134
+ 497              	.LBB282:
+ 498              	.LBI282:
+ 291:Core/Src/ili9341.c **** {
+ 499              		.loc 1 291 6 view .LVU135
+ 500              	.LBB283:
+ 293:Core/Src/ili9341.c **** }
+ 501              		.loc 1 293 3 view .LVU136
+ 502 00b4 0020     		movs	r0, #0
+ 503 00b6 FFF7FEFF 		bl	LCD_IO_WriteData
+ 504              	.LVL34:
+ 293:Core/Src/ili9341.c **** }
+ 505              		.loc 1 293 3 is_stmt 0 view .LVU137
+ 506              	.LBE283:
+ 507              	.LBE282:
+ 155:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DFC);
+ 508              		.loc 1 155 3 is_stmt 1 view .LVU138
+ 509              	.LBB284:
+ 510              	.LBI284:
+ 291:Core/Src/ili9341.c **** {
+ 511              		.loc 1 291 6 view .LVU139
+ 512              	.LBB285:
+ 293:Core/Src/ili9341.c **** }
+ 513              		.loc 1 293 3 view .LVU140
+ 514 00ba 1B20     		movs	r0, #27
+ 515 00bc FFF7FEFF 		bl	LCD_IO_WriteData
+ARM GAS  /tmp/cc1cDCDG.s 			page 18
+
+
+ 516              	.LVL35:
+ 293:Core/Src/ili9341.c **** }
+ 517              		.loc 1 293 3 is_stmt 0 view .LVU141
+ 518              	.LBE285:
+ 519              	.LBE284:
+ 156:Core/Src/ili9341.c ****   ili9341_WriteData(0x0A);
+ 520              		.loc 1 156 3 is_stmt 1 view .LVU142
+ 521              	.LBB286:
+ 522              	.LBI286:
+ 281:Core/Src/ili9341.c **** {
+ 523              		.loc 1 281 6 view .LVU143
+ 524              	.LBB287:
+ 283:Core/Src/ili9341.c **** }
+ 525              		.loc 1 283 3 view .LVU144
+ 526 00c0 B620     		movs	r0, #182
+ 527 00c2 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 528              	.LVL36:
+ 283:Core/Src/ili9341.c **** }
+ 529              		.loc 1 283 3 is_stmt 0 view .LVU145
+ 530              	.LBE287:
+ 531              	.LBE286:
+ 157:Core/Src/ili9341.c ****   ili9341_WriteData(0xA2);
+ 532              		.loc 1 157 3 is_stmt 1 view .LVU146
+ 533              	.LBB288:
+ 534              	.LBI288:
+ 291:Core/Src/ili9341.c **** {
+ 535              		.loc 1 291 6 view .LVU147
+ 536              	.LBB289:
+ 293:Core/Src/ili9341.c **** }
+ 537              		.loc 1 293 3 view .LVU148
+ 538 00c6 0A20     		movs	r0, #10
+ 539 00c8 FFF7FEFF 		bl	LCD_IO_WriteData
+ 540              	.LVL37:
+ 293:Core/Src/ili9341.c **** }
+ 541              		.loc 1 293 3 is_stmt 0 view .LVU149
+ 542              	.LBE289:
+ 543              	.LBE288:
+ 158:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWER1);
+ 544              		.loc 1 158 3 is_stmt 1 view .LVU150
+ 545              	.LBB290:
+ 546              	.LBI290:
+ 291:Core/Src/ili9341.c **** {
+ 547              		.loc 1 291 6 view .LVU151
+ 548              	.LBB291:
+ 293:Core/Src/ili9341.c **** }
+ 549              		.loc 1 293 3 view .LVU152
+ 550 00cc A220     		movs	r0, #162
+ 551 00ce FFF7FEFF 		bl	LCD_IO_WriteData
+ 552              	.LVL38:
+ 293:Core/Src/ili9341.c **** }
+ 553              		.loc 1 293 3 is_stmt 0 view .LVU153
+ 554              	.LBE291:
+ 555              	.LBE290:
+ 159:Core/Src/ili9341.c ****   ili9341_WriteData(0x10);
+ 556              		.loc 1 159 3 is_stmt 1 view .LVU154
+ 557              	.LBB292:
+ 558              	.LBI292:
+ARM GAS  /tmp/cc1cDCDG.s 			page 19
+
+
+ 281:Core/Src/ili9341.c **** {
+ 559              		.loc 1 281 6 view .LVU155
+ 560              	.LBB293:
+ 283:Core/Src/ili9341.c **** }
+ 561              		.loc 1 283 3 view .LVU156
+ 562 00d2 C020     		movs	r0, #192
+ 563 00d4 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 564              	.LVL39:
+ 283:Core/Src/ili9341.c **** }
+ 565              		.loc 1 283 3 is_stmt 0 view .LVU157
+ 566              	.LBE293:
+ 567              	.LBE292:
+ 160:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_POWER2);
+ 568              		.loc 1 160 3 is_stmt 1 view .LVU158
+ 569              	.LBB294:
+ 570              	.LBI294:
+ 291:Core/Src/ili9341.c **** {
+ 571              		.loc 1 291 6 view .LVU159
+ 572              	.LBB295:
+ 293:Core/Src/ili9341.c **** }
+ 573              		.loc 1 293 3 view .LVU160
+ 574 00d8 1020     		movs	r0, #16
+ 575 00da FFF7FEFF 		bl	LCD_IO_WriteData
+ 576              	.LVL40:
+ 293:Core/Src/ili9341.c **** }
+ 577              		.loc 1 293 3 is_stmt 0 view .LVU161
+ 578              	.LBE295:
+ 579              	.LBE294:
+ 161:Core/Src/ili9341.c ****   ili9341_WriteData(0x10);
+ 580              		.loc 1 161 3 is_stmt 1 view .LVU162
+ 581              	.LBB296:
+ 582              	.LBI296:
+ 281:Core/Src/ili9341.c **** {
+ 583              		.loc 1 281 6 view .LVU163
+ 584              	.LBB297:
+ 283:Core/Src/ili9341.c **** }
+ 585              		.loc 1 283 3 view .LVU164
+ 586 00de C120     		movs	r0, #193
+ 587 00e0 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 588              	.LVL41:
+ 283:Core/Src/ili9341.c **** }
+ 589              		.loc 1 283 3 is_stmt 0 view .LVU165
+ 590              	.LBE297:
+ 591              	.LBE296:
+ 162:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_VCOM1);
+ 592              		.loc 1 162 3 is_stmt 1 view .LVU166
+ 593              	.LBB298:
+ 594              	.LBI298:
+ 291:Core/Src/ili9341.c **** {
+ 595              		.loc 1 291 6 view .LVU167
+ 596              	.LBB299:
+ 293:Core/Src/ili9341.c **** }
+ 597              		.loc 1 293 3 view .LVU168
+ 598 00e4 1020     		movs	r0, #16
+ 599 00e6 FFF7FEFF 		bl	LCD_IO_WriteData
+ 600              	.LVL42:
+ 293:Core/Src/ili9341.c **** }
+ARM GAS  /tmp/cc1cDCDG.s 			page 20
+
+
+ 601              		.loc 1 293 3 is_stmt 0 view .LVU169
+ 602              	.LBE299:
+ 603              	.LBE298:
+ 163:Core/Src/ili9341.c ****   ili9341_WriteData(0x45);
+ 604              		.loc 1 163 3 is_stmt 1 view .LVU170
+ 605              	.LBB300:
+ 606              	.LBI300:
+ 281:Core/Src/ili9341.c **** {
+ 607              		.loc 1 281 6 view .LVU171
+ 608              	.LBB301:
+ 283:Core/Src/ili9341.c **** }
+ 609              		.loc 1 283 3 view .LVU172
+ 610 00ea C520     		movs	r0, #197
+ 611 00ec FFF7FEFF 		bl	LCD_IO_WriteReg
+ 612              	.LVL43:
+ 283:Core/Src/ili9341.c **** }
+ 613              		.loc 1 283 3 is_stmt 0 view .LVU173
+ 614              	.LBE301:
+ 615              	.LBE300:
+ 164:Core/Src/ili9341.c ****   ili9341_WriteData(0x15);
+ 616              		.loc 1 164 3 is_stmt 1 view .LVU174
+ 617              	.LBB302:
+ 618              	.LBI302:
+ 291:Core/Src/ili9341.c **** {
+ 619              		.loc 1 291 6 view .LVU175
+ 620              	.LBB303:
+ 293:Core/Src/ili9341.c **** }
+ 621              		.loc 1 293 3 view .LVU176
+ 622 00f0 4520     		movs	r0, #69
+ 623 00f2 FFF7FEFF 		bl	LCD_IO_WriteData
+ 624              	.LVL44:
+ 293:Core/Src/ili9341.c **** }
+ 625              		.loc 1 293 3 is_stmt 0 view .LVU177
+ 626              	.LBE303:
+ 627              	.LBE302:
+ 165:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_VCOM2);
+ 628              		.loc 1 165 3 is_stmt 1 view .LVU178
+ 629              	.LBB304:
+ 630              	.LBI304:
+ 291:Core/Src/ili9341.c **** {
+ 631              		.loc 1 291 6 view .LVU179
+ 632              	.LBB305:
+ 293:Core/Src/ili9341.c **** }
+ 633              		.loc 1 293 3 view .LVU180
+ 634 00f6 1520     		movs	r0, #21
+ 635 00f8 FFF7FEFF 		bl	LCD_IO_WriteData
+ 636              	.LVL45:
+ 293:Core/Src/ili9341.c **** }
+ 637              		.loc 1 293 3 is_stmt 0 view .LVU181
+ 638              	.LBE305:
+ 639              	.LBE304:
+ 166:Core/Src/ili9341.c ****   ili9341_WriteData(0x90);
+ 640              		.loc 1 166 3 is_stmt 1 view .LVU182
+ 641              	.LBB306:
+ 642              	.LBI306:
+ 281:Core/Src/ili9341.c **** {
+ 643              		.loc 1 281 6 view .LVU183
+ARM GAS  /tmp/cc1cDCDG.s 			page 21
+
+
+ 644              	.LBB307:
+ 283:Core/Src/ili9341.c **** }
+ 645              		.loc 1 283 3 view .LVU184
+ 646 00fc C720     		movs	r0, #199
+ 647 00fe FFF7FEFF 		bl	LCD_IO_WriteReg
+ 648              	.LVL46:
+ 283:Core/Src/ili9341.c **** }
+ 649              		.loc 1 283 3 is_stmt 0 view .LVU185
+ 650              	.LBE307:
+ 651              	.LBE306:
+ 167:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_MAC);
+ 652              		.loc 1 167 3 is_stmt 1 view .LVU186
+ 653              	.LBB308:
+ 654              	.LBI308:
+ 291:Core/Src/ili9341.c **** {
+ 655              		.loc 1 291 6 view .LVU187
+ 656              	.LBB309:
+ 293:Core/Src/ili9341.c **** }
+ 657              		.loc 1 293 3 view .LVU188
+ 658 0102 9020     		movs	r0, #144
+ 659 0104 FFF7FEFF 		bl	LCD_IO_WriteData
+ 660              	.LVL47:
+ 293:Core/Src/ili9341.c **** }
+ 661              		.loc 1 293 3 is_stmt 0 view .LVU189
+ 662              	.LBE309:
+ 663              	.LBE308:
+ 168:Core/Src/ili9341.c ****   ili9341_WriteData(0xC8);
+ 664              		.loc 1 168 3 is_stmt 1 view .LVU190
+ 665              	.LBB310:
+ 666              	.LBI310:
+ 281:Core/Src/ili9341.c **** {
+ 667              		.loc 1 281 6 view .LVU191
+ 668              	.LBB311:
+ 283:Core/Src/ili9341.c **** }
+ 669              		.loc 1 283 3 view .LVU192
+ 670 0108 3620     		movs	r0, #54
+ 671 010a FFF7FEFF 		bl	LCD_IO_WriteReg
+ 672              	.LVL48:
+ 283:Core/Src/ili9341.c **** }
+ 673              		.loc 1 283 3 is_stmt 0 view .LVU193
+ 674              	.LBE311:
+ 675              	.LBE310:
+ 169:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_3GAMMA_EN);
+ 676              		.loc 1 169 3 is_stmt 1 view .LVU194
+ 677              	.LBB312:
+ 678              	.LBI312:
+ 291:Core/Src/ili9341.c **** {
+ 679              		.loc 1 291 6 view .LVU195
+ 680              	.LBB313:
+ 293:Core/Src/ili9341.c **** }
+ 681              		.loc 1 293 3 view .LVU196
+ 682 010e C820     		movs	r0, #200
+ 683 0110 FFF7FEFF 		bl	LCD_IO_WriteData
+ 684              	.LVL49:
+ 293:Core/Src/ili9341.c **** }
+ 685              		.loc 1 293 3 is_stmt 0 view .LVU197
+ 686              	.LBE313:
+ARM GAS  /tmp/cc1cDCDG.s 			page 22
+
+
+ 687              	.LBE312:
+ 170:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 688              		.loc 1 170 3 is_stmt 1 view .LVU198
+ 689              	.LBB314:
+ 690              	.LBI314:
+ 281:Core/Src/ili9341.c **** {
+ 691              		.loc 1 281 6 view .LVU199
+ 692              	.LBB315:
+ 283:Core/Src/ili9341.c **** }
+ 693              		.loc 1 283 3 view .LVU200
+ 694 0114 F220     		movs	r0, #242
+ 695 0116 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 696              	.LVL50:
+ 283:Core/Src/ili9341.c **** }
+ 697              		.loc 1 283 3 is_stmt 0 view .LVU201
+ 698              	.LBE315:
+ 699              	.LBE314:
+ 171:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_RGB_INTERFACE);
+ 700              		.loc 1 171 3 is_stmt 1 view .LVU202
+ 701              	.LBB316:
+ 702              	.LBI316:
+ 291:Core/Src/ili9341.c **** {
+ 703              		.loc 1 291 6 view .LVU203
+ 704              	.LBB317:
+ 293:Core/Src/ili9341.c **** }
+ 705              		.loc 1 293 3 view .LVU204
+ 706 011a 0020     		movs	r0, #0
+ 707 011c FFF7FEFF 		bl	LCD_IO_WriteData
+ 708              	.LVL51:
+ 293:Core/Src/ili9341.c **** }
+ 709              		.loc 1 293 3 is_stmt 0 view .LVU205
+ 710              	.LBE317:
+ 711              	.LBE316:
+ 172:Core/Src/ili9341.c ****   ili9341_WriteData(0xC2);
+ 712              		.loc 1 172 3 is_stmt 1 view .LVU206
+ 713              	.LBB318:
+ 714              	.LBI318:
+ 281:Core/Src/ili9341.c **** {
+ 715              		.loc 1 281 6 view .LVU207
+ 716              	.LBB319:
+ 283:Core/Src/ili9341.c **** }
+ 717              		.loc 1 283 3 view .LVU208
+ 718 0120 B020     		movs	r0, #176
+ 719 0122 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 720              	.LVL52:
+ 283:Core/Src/ili9341.c **** }
+ 721              		.loc 1 283 3 is_stmt 0 view .LVU209
+ 722              	.LBE319:
+ 723              	.LBE318:
+ 173:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DFC);
+ 724              		.loc 1 173 3 is_stmt 1 view .LVU210
+ 725              	.LBB320:
+ 726              	.LBI320:
+ 291:Core/Src/ili9341.c **** {
+ 727              		.loc 1 291 6 view .LVU211
+ 728              	.LBB321:
+ 293:Core/Src/ili9341.c **** }
+ARM GAS  /tmp/cc1cDCDG.s 			page 23
+
+
+ 729              		.loc 1 293 3 view .LVU212
+ 730 0126 C220     		movs	r0, #194
+ 731 0128 FFF7FEFF 		bl	LCD_IO_WriteData
+ 732              	.LVL53:
+ 293:Core/Src/ili9341.c **** }
+ 733              		.loc 1 293 3 is_stmt 0 view .LVU213
+ 734              	.LBE321:
+ 735              	.LBE320:
+ 174:Core/Src/ili9341.c ****   ili9341_WriteData(0x0A);
+ 736              		.loc 1 174 3 is_stmt 1 view .LVU214
+ 737              	.LBB322:
+ 738              	.LBI322:
+ 281:Core/Src/ili9341.c **** {
+ 739              		.loc 1 281 6 view .LVU215
+ 740              	.LBB323:
+ 283:Core/Src/ili9341.c **** }
+ 741              		.loc 1 283 3 view .LVU216
+ 742 012c B620     		movs	r0, #182
+ 743 012e FFF7FEFF 		bl	LCD_IO_WriteReg
+ 744              	.LVL54:
+ 283:Core/Src/ili9341.c **** }
+ 745              		.loc 1 283 3 is_stmt 0 view .LVU217
+ 746              	.LBE323:
+ 747              	.LBE322:
+ 175:Core/Src/ili9341.c ****   ili9341_WriteData(0xA7);
+ 748              		.loc 1 175 3 is_stmt 1 view .LVU218
+ 749              	.LBB324:
+ 750              	.LBI324:
+ 291:Core/Src/ili9341.c **** {
+ 751              		.loc 1 291 6 view .LVU219
+ 752              	.LBB325:
+ 293:Core/Src/ili9341.c **** }
+ 753              		.loc 1 293 3 view .LVU220
+ 754 0132 0A20     		movs	r0, #10
+ 755 0134 FFF7FEFF 		bl	LCD_IO_WriteData
+ 756              	.LVL55:
+ 293:Core/Src/ili9341.c **** }
+ 757              		.loc 1 293 3 is_stmt 0 view .LVU221
+ 758              	.LBE325:
+ 759              	.LBE324:
+ 176:Core/Src/ili9341.c ****   ili9341_WriteData(0x27);
+ 760              		.loc 1 176 3 is_stmt 1 view .LVU222
+ 761              	.LBB326:
+ 762              	.LBI326:
+ 291:Core/Src/ili9341.c **** {
+ 763              		.loc 1 291 6 view .LVU223
+ 764              	.LBB327:
+ 293:Core/Src/ili9341.c **** }
+ 765              		.loc 1 293 3 view .LVU224
+ 766 0138 A720     		movs	r0, #167
+ 767 013a FFF7FEFF 		bl	LCD_IO_WriteData
+ 768              	.LVL56:
+ 293:Core/Src/ili9341.c **** }
+ 769              		.loc 1 293 3 is_stmt 0 view .LVU225
+ 770              	.LBE327:
+ 771              	.LBE326:
+ 177:Core/Src/ili9341.c ****   ili9341_WriteData(0x04);
+ARM GAS  /tmp/cc1cDCDG.s 			page 24
+
+
+ 772              		.loc 1 177 3 is_stmt 1 view .LVU226
+ 773              	.LBB328:
+ 774              	.LBI328:
+ 291:Core/Src/ili9341.c **** {
+ 775              		.loc 1 291 6 view .LVU227
+ 776              	.LBB329:
+ 293:Core/Src/ili9341.c **** }
+ 777              		.loc 1 293 3 view .LVU228
+ 778 013e 2720     		movs	r0, #39
+ 779 0140 FFF7FEFF 		bl	LCD_IO_WriteData
+ 780              	.LVL57:
+ 293:Core/Src/ili9341.c **** }
+ 781              		.loc 1 293 3 is_stmt 0 view .LVU229
+ 782              	.LBE329:
+ 783              	.LBE328:
+ 178:Core/Src/ili9341.c ****   
+ 784              		.loc 1 178 3 is_stmt 1 view .LVU230
+ 785              	.LBB330:
+ 786              	.LBI330:
+ 291:Core/Src/ili9341.c **** {
+ 787              		.loc 1 291 6 view .LVU231
+ 788              	.LBB331:
+ 293:Core/Src/ili9341.c **** }
+ 789              		.loc 1 293 3 view .LVU232
+ 790 0144 0420     		movs	r0, #4
+ 791 0146 FFF7FEFF 		bl	LCD_IO_WriteData
+ 792              	.LVL58:
+ 293:Core/Src/ili9341.c **** }
+ 793              		.loc 1 293 3 is_stmt 0 view .LVU233
+ 794              	.LBE331:
+ 795              	.LBE330:
+ 181:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 796              		.loc 1 181 3 is_stmt 1 view .LVU234
+ 797              	.LBB332:
+ 798              	.LBI332:
+ 281:Core/Src/ili9341.c **** {
+ 799              		.loc 1 281 6 view .LVU235
+ 800              	.LBB333:
+ 283:Core/Src/ili9341.c **** }
+ 801              		.loc 1 283 3 view .LVU236
+ 802 014a 2A20     		movs	r0, #42
+ 803 014c FFF7FEFF 		bl	LCD_IO_WriteReg
+ 804              	.LVL59:
+ 283:Core/Src/ili9341.c **** }
+ 805              		.loc 1 283 3 is_stmt 0 view .LVU237
+ 806              	.LBE333:
+ 807              	.LBE332:
+ 182:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 808              		.loc 1 182 3 is_stmt 1 view .LVU238
+ 809              	.LBB334:
+ 810              	.LBI334:
+ 291:Core/Src/ili9341.c **** {
+ 811              		.loc 1 291 6 view .LVU239
+ 812              	.LBB335:
+ 293:Core/Src/ili9341.c **** }
+ 813              		.loc 1 293 3 view .LVU240
+ 814 0150 0020     		movs	r0, #0
+ARM GAS  /tmp/cc1cDCDG.s 			page 25
+
+
+ 815 0152 FFF7FEFF 		bl	LCD_IO_WriteData
+ 816              	.LVL60:
+ 293:Core/Src/ili9341.c **** }
+ 817              		.loc 1 293 3 is_stmt 0 view .LVU241
+ 818              	.LBE335:
+ 819              	.LBE334:
+ 183:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 820              		.loc 1 183 3 is_stmt 1 view .LVU242
+ 821              	.LBB336:
+ 822              	.LBI336:
+ 291:Core/Src/ili9341.c **** {
+ 823              		.loc 1 291 6 view .LVU243
+ 824              	.LBB337:
+ 293:Core/Src/ili9341.c **** }
+ 825              		.loc 1 293 3 view .LVU244
+ 826 0156 0020     		movs	r0, #0
+ 827 0158 FFF7FEFF 		bl	LCD_IO_WriteData
+ 828              	.LVL61:
+ 293:Core/Src/ili9341.c **** }
+ 829              		.loc 1 293 3 is_stmt 0 view .LVU245
+ 830              	.LBE337:
+ 831              	.LBE336:
+ 184:Core/Src/ili9341.c ****   ili9341_WriteData(0xEF);
+ 832              		.loc 1 184 3 is_stmt 1 view .LVU246
+ 833              	.LBB338:
+ 834              	.LBI338:
+ 291:Core/Src/ili9341.c **** {
+ 835              		.loc 1 291 6 view .LVU247
+ 836              	.LBB339:
+ 293:Core/Src/ili9341.c **** }
+ 837              		.loc 1 293 3 view .LVU248
+ 838 015c 0020     		movs	r0, #0
+ 839 015e FFF7FEFF 		bl	LCD_IO_WriteData
+ 840              	.LVL62:
+ 293:Core/Src/ili9341.c **** }
+ 841              		.loc 1 293 3 is_stmt 0 view .LVU249
+ 842              	.LBE339:
+ 843              	.LBE338:
+ 185:Core/Src/ili9341.c ****   /* Page address set */
+ 844              		.loc 1 185 3 is_stmt 1 view .LVU250
+ 845              	.LBB340:
+ 846              	.LBI340:
+ 291:Core/Src/ili9341.c **** {
+ 847              		.loc 1 291 6 view .LVU251
+ 848              	.LBB341:
+ 293:Core/Src/ili9341.c **** }
+ 849              		.loc 1 293 3 view .LVU252
+ 850 0162 EF20     		movs	r0, #239
+ 851 0164 FFF7FEFF 		bl	LCD_IO_WriteData
+ 852              	.LVL63:
+ 293:Core/Src/ili9341.c **** }
+ 853              		.loc 1 293 3 is_stmt 0 view .LVU253
+ 854              	.LBE341:
+ 855              	.LBE340:
+ 187:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 856              		.loc 1 187 3 is_stmt 1 view .LVU254
+ 857              	.LBB342:
+ARM GAS  /tmp/cc1cDCDG.s 			page 26
+
+
+ 858              	.LBI342:
+ 281:Core/Src/ili9341.c **** {
+ 859              		.loc 1 281 6 view .LVU255
+ 860              	.LBB343:
+ 283:Core/Src/ili9341.c **** }
+ 861              		.loc 1 283 3 view .LVU256
+ 862 0168 2B20     		movs	r0, #43
+ 863 016a FFF7FEFF 		bl	LCD_IO_WriteReg
+ 864              	.LVL64:
+ 283:Core/Src/ili9341.c **** }
+ 865              		.loc 1 283 3 is_stmt 0 view .LVU257
+ 866              	.LBE343:
+ 867              	.LBE342:
+ 188:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 868              		.loc 1 188 3 is_stmt 1 view .LVU258
+ 869              	.LBB344:
+ 870              	.LBI344:
+ 291:Core/Src/ili9341.c **** {
+ 871              		.loc 1 291 6 view .LVU259
+ 872              	.LBB345:
+ 293:Core/Src/ili9341.c **** }
+ 873              		.loc 1 293 3 view .LVU260
+ 874 016e 0020     		movs	r0, #0
+ 875 0170 FFF7FEFF 		bl	LCD_IO_WriteData
+ 876              	.LVL65:
+ 293:Core/Src/ili9341.c **** }
+ 877              		.loc 1 293 3 is_stmt 0 view .LVU261
+ 878              	.LBE345:
+ 879              	.LBE344:
+ 189:Core/Src/ili9341.c ****   ili9341_WriteData(0x01);
+ 880              		.loc 1 189 3 is_stmt 1 view .LVU262
+ 881              	.LBB346:
+ 882              	.LBI346:
+ 291:Core/Src/ili9341.c **** {
+ 883              		.loc 1 291 6 view .LVU263
+ 884              	.LBB347:
+ 293:Core/Src/ili9341.c **** }
+ 885              		.loc 1 293 3 view .LVU264
+ 886 0174 0020     		movs	r0, #0
+ 887 0176 FFF7FEFF 		bl	LCD_IO_WriteData
+ 888              	.LVL66:
+ 293:Core/Src/ili9341.c **** }
+ 889              		.loc 1 293 3 is_stmt 0 view .LVU265
+ 890              	.LBE347:
+ 891              	.LBE346:
+ 190:Core/Src/ili9341.c ****   ili9341_WriteData(0x3F);
+ 892              		.loc 1 190 3 is_stmt 1 view .LVU266
+ 893              	.LBB348:
+ 894              	.LBI348:
+ 291:Core/Src/ili9341.c **** {
+ 895              		.loc 1 291 6 view .LVU267
+ 896              	.LBB349:
+ 293:Core/Src/ili9341.c **** }
+ 897              		.loc 1 293 3 view .LVU268
+ 898 017a 0120     		movs	r0, #1
+ 899 017c FFF7FEFF 		bl	LCD_IO_WriteData
+ 900              	.LVL67:
+ARM GAS  /tmp/cc1cDCDG.s 			page 27
+
+
+ 293:Core/Src/ili9341.c **** }
+ 901              		.loc 1 293 3 is_stmt 0 view .LVU269
+ 902              	.LBE349:
+ 903              	.LBE348:
+ 191:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_INTERFACE);
+ 904              		.loc 1 191 3 is_stmt 1 view .LVU270
+ 905              	.LBB350:
+ 906              	.LBI350:
+ 291:Core/Src/ili9341.c **** {
+ 907              		.loc 1 291 6 view .LVU271
+ 908              	.LBB351:
+ 293:Core/Src/ili9341.c **** }
+ 909              		.loc 1 293 3 view .LVU272
+ 910 0180 3F20     		movs	r0, #63
+ 911 0182 FFF7FEFF 		bl	LCD_IO_WriteData
+ 912              	.LVL68:
+ 293:Core/Src/ili9341.c **** }
+ 913              		.loc 1 293 3 is_stmt 0 view .LVU273
+ 914              	.LBE351:
+ 915              	.LBE350:
+ 192:Core/Src/ili9341.c ****   ili9341_WriteData(0x01);
+ 916              		.loc 1 192 3 is_stmt 1 view .LVU274
+ 917              	.LBB352:
+ 918              	.LBI352:
+ 281:Core/Src/ili9341.c **** {
+ 919              		.loc 1 281 6 view .LVU275
+ 920              	.LBB353:
+ 283:Core/Src/ili9341.c **** }
+ 921              		.loc 1 283 3 view .LVU276
+ 922 0186 F620     		movs	r0, #246
+ 923 0188 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 924              	.LVL69:
+ 283:Core/Src/ili9341.c **** }
+ 925              		.loc 1 283 3 is_stmt 0 view .LVU277
+ 926              	.LBE353:
+ 927              	.LBE352:
+ 193:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 928              		.loc 1 193 3 is_stmt 1 view .LVU278
+ 929              	.LBB354:
+ 930              	.LBI354:
+ 291:Core/Src/ili9341.c **** {
+ 931              		.loc 1 291 6 view .LVU279
+ 932              	.LBB355:
+ 293:Core/Src/ili9341.c **** }
+ 933              		.loc 1 293 3 view .LVU280
+ 934 018c 0120     		movs	r0, #1
+ 935 018e FFF7FEFF 		bl	LCD_IO_WriteData
+ 936              	.LVL70:
+ 293:Core/Src/ili9341.c **** }
+ 937              		.loc 1 293 3 is_stmt 0 view .LVU281
+ 938              	.LBE355:
+ 939              	.LBE354:
+ 194:Core/Src/ili9341.c ****   ili9341_WriteData(0x06);
+ 940              		.loc 1 194 3 is_stmt 1 view .LVU282
+ 941              	.LBB356:
+ 942              	.LBI356:
+ 291:Core/Src/ili9341.c **** {
+ARM GAS  /tmp/cc1cDCDG.s 			page 28
+
+
+ 943              		.loc 1 291 6 view .LVU283
+ 944              	.LBB357:
+ 293:Core/Src/ili9341.c **** }
+ 945              		.loc 1 293 3 view .LVU284
+ 946 0192 0020     		movs	r0, #0
+ 947 0194 FFF7FEFF 		bl	LCD_IO_WriteData
+ 948              	.LVL71:
+ 293:Core/Src/ili9341.c **** }
+ 949              		.loc 1 293 3 is_stmt 0 view .LVU285
+ 950              	.LBE357:
+ 951              	.LBE356:
+ 195:Core/Src/ili9341.c ****   
+ 952              		.loc 1 195 3 is_stmt 1 view .LVU286
+ 953              	.LBB358:
+ 954              	.LBI358:
+ 291:Core/Src/ili9341.c **** {
+ 955              		.loc 1 291 6 view .LVU287
+ 956              	.LBB359:
+ 293:Core/Src/ili9341.c **** }
+ 957              		.loc 1 293 3 view .LVU288
+ 958 0198 0620     		movs	r0, #6
+ 959 019a FFF7FEFF 		bl	LCD_IO_WriteData
+ 960              	.LVL72:
+ 293:Core/Src/ili9341.c **** }
+ 961              		.loc 1 293 3 is_stmt 0 view .LVU289
+ 962              	.LBE359:
+ 963              	.LBE358:
+ 197:Core/Src/ili9341.c ****   LCD_Delay(200);
+ 964              		.loc 1 197 3 is_stmt 1 view .LVU290
+ 965              	.LBB360:
+ 966              	.LBI360:
+ 281:Core/Src/ili9341.c **** {
+ 967              		.loc 1 281 6 view .LVU291
+ 968              	.LBB361:
+ 283:Core/Src/ili9341.c **** }
+ 969              		.loc 1 283 3 view .LVU292
+ 970 019e 2C20     		movs	r0, #44
+ 971 01a0 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 972              	.LVL73:
+ 283:Core/Src/ili9341.c **** }
+ 973              		.loc 1 283 3 is_stmt 0 view .LVU293
+ 974              	.LBE361:
+ 975              	.LBE360:
+ 198:Core/Src/ili9341.c ****   
+ 976              		.loc 1 198 3 is_stmt 1 view .LVU294
+ 977 01a4 C820     		movs	r0, #200
+ 978 01a6 FFF7FEFF 		bl	LCD_Delay
+ 979              	.LVL74:
+ 200:Core/Src/ili9341.c ****   ili9341_WriteData(0x01);
+ 980              		.loc 1 200 3 view .LVU295
+ 981              	.LBB362:
+ 982              	.LBI362:
+ 281:Core/Src/ili9341.c **** {
+ 983              		.loc 1 281 6 view .LVU296
+ 984              	.LBB363:
+ 283:Core/Src/ili9341.c **** }
+ 985              		.loc 1 283 3 view .LVU297
+ARM GAS  /tmp/cc1cDCDG.s 			page 29
+
+
+ 986 01aa 2620     		movs	r0, #38
+ 987 01ac FFF7FEFF 		bl	LCD_IO_WriteReg
+ 988              	.LVL75:
+ 283:Core/Src/ili9341.c **** }
+ 989              		.loc 1 283 3 is_stmt 0 view .LVU298
+ 990              	.LBE363:
+ 991              	.LBE362:
+ 201:Core/Src/ili9341.c ****   
+ 992              		.loc 1 201 3 is_stmt 1 view .LVU299
+ 993              	.LBB364:
+ 994              	.LBI364:
+ 291:Core/Src/ili9341.c **** {
+ 995              		.loc 1 291 6 view .LVU300
+ 996              	.LBB365:
+ 293:Core/Src/ili9341.c **** }
+ 997              		.loc 1 293 3 view .LVU301
+ 998 01b0 0120     		movs	r0, #1
+ 999 01b2 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1000              	.LVL76:
+ 293:Core/Src/ili9341.c **** }
+ 1001              		.loc 1 293 3 is_stmt 0 view .LVU302
+ 1002              	.LBE365:
+ 1003              	.LBE364:
+ 203:Core/Src/ili9341.c ****   ili9341_WriteData(0x0F);
+ 1004              		.loc 1 203 3 is_stmt 1 view .LVU303
+ 1005              	.LBB366:
+ 1006              	.LBI366:
+ 281:Core/Src/ili9341.c **** {
+ 1007              		.loc 1 281 6 view .LVU304
+ 1008              	.LBB367:
+ 283:Core/Src/ili9341.c **** }
+ 1009              		.loc 1 283 3 view .LVU305
+ 1010 01b6 E020     		movs	r0, #224
+ 1011 01b8 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 1012              	.LVL77:
+ 283:Core/Src/ili9341.c **** }
+ 1013              		.loc 1 283 3 is_stmt 0 view .LVU306
+ 1014              	.LBE367:
+ 1015              	.LBE366:
+ 204:Core/Src/ili9341.c ****   ili9341_WriteData(0x29);
+ 1016              		.loc 1 204 3 is_stmt 1 view .LVU307
+ 1017              	.LBB368:
+ 1018              	.LBI368:
+ 291:Core/Src/ili9341.c **** {
+ 1019              		.loc 1 291 6 view .LVU308
+ 1020              	.LBB369:
+ 293:Core/Src/ili9341.c **** }
+ 1021              		.loc 1 293 3 view .LVU309
+ 1022 01bc 0F20     		movs	r0, #15
+ 1023 01be FFF7FEFF 		bl	LCD_IO_WriteData
+ 1024              	.LVL78:
+ 293:Core/Src/ili9341.c **** }
+ 1025              		.loc 1 293 3 is_stmt 0 view .LVU310
+ 1026              	.LBE369:
+ 1027              	.LBE368:
+ 205:Core/Src/ili9341.c ****   ili9341_WriteData(0x24);
+ 1028              		.loc 1 205 3 is_stmt 1 view .LVU311
+ARM GAS  /tmp/cc1cDCDG.s 			page 30
+
+
+ 1029              	.LBB370:
+ 1030              	.LBI370:
+ 291:Core/Src/ili9341.c **** {
+ 1031              		.loc 1 291 6 view .LVU312
+ 1032              	.LBB371:
+ 293:Core/Src/ili9341.c **** }
+ 1033              		.loc 1 293 3 view .LVU313
+ 1034 01c2 2920     		movs	r0, #41
+ 1035 01c4 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1036              	.LVL79:
+ 293:Core/Src/ili9341.c **** }
+ 1037              		.loc 1 293 3 is_stmt 0 view .LVU314
+ 1038              	.LBE371:
+ 1039              	.LBE370:
+ 206:Core/Src/ili9341.c ****   ili9341_WriteData(0x0C);
+ 1040              		.loc 1 206 3 is_stmt 1 view .LVU315
+ 1041              	.LBB372:
+ 1042              	.LBI372:
+ 291:Core/Src/ili9341.c **** {
+ 1043              		.loc 1 291 6 view .LVU316
+ 1044              	.LBB373:
+ 293:Core/Src/ili9341.c **** }
+ 1045              		.loc 1 293 3 view .LVU317
+ 1046 01c8 2420     		movs	r0, #36
+ 1047 01ca FFF7FEFF 		bl	LCD_IO_WriteData
+ 1048              	.LVL80:
+ 293:Core/Src/ili9341.c **** }
+ 1049              		.loc 1 293 3 is_stmt 0 view .LVU318
+ 1050              	.LBE373:
+ 1051              	.LBE372:
+ 207:Core/Src/ili9341.c ****   ili9341_WriteData(0x0E);
+ 1052              		.loc 1 207 3 is_stmt 1 view .LVU319
+ 1053              	.LBB374:
+ 1054              	.LBI374:
+ 291:Core/Src/ili9341.c **** {
+ 1055              		.loc 1 291 6 view .LVU320
+ 1056              	.LBB375:
+ 293:Core/Src/ili9341.c **** }
+ 1057              		.loc 1 293 3 view .LVU321
+ 1058 01ce 0C20     		movs	r0, #12
+ 1059 01d0 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1060              	.LVL81:
+ 293:Core/Src/ili9341.c **** }
+ 1061              		.loc 1 293 3 is_stmt 0 view .LVU322
+ 1062              	.LBE375:
+ 1063              	.LBE374:
+ 208:Core/Src/ili9341.c ****   ili9341_WriteData(0x09);
+ 1064              		.loc 1 208 3 is_stmt 1 view .LVU323
+ 1065              	.LBB376:
+ 1066              	.LBI376:
+ 291:Core/Src/ili9341.c **** {
+ 1067              		.loc 1 291 6 view .LVU324
+ 1068              	.LBB377:
+ 293:Core/Src/ili9341.c **** }
+ 1069              		.loc 1 293 3 view .LVU325
+ 1070 01d4 0E20     		movs	r0, #14
+ 1071 01d6 FFF7FEFF 		bl	LCD_IO_WriteData
+ARM GAS  /tmp/cc1cDCDG.s 			page 31
+
+
+ 1072              	.LVL82:
+ 293:Core/Src/ili9341.c **** }
+ 1073              		.loc 1 293 3 is_stmt 0 view .LVU326
+ 1074              	.LBE377:
+ 1075              	.LBE376:
+ 209:Core/Src/ili9341.c ****   ili9341_WriteData(0x4E);
+ 1076              		.loc 1 209 3 is_stmt 1 view .LVU327
+ 1077              	.LBB378:
+ 1078              	.LBI378:
+ 291:Core/Src/ili9341.c **** {
+ 1079              		.loc 1 291 6 view .LVU328
+ 1080              	.LBB379:
+ 293:Core/Src/ili9341.c **** }
+ 1081              		.loc 1 293 3 view .LVU329
+ 1082 01da 0920     		movs	r0, #9
+ 1083 01dc FFF7FEFF 		bl	LCD_IO_WriteData
+ 1084              	.LVL83:
+ 293:Core/Src/ili9341.c **** }
+ 1085              		.loc 1 293 3 is_stmt 0 view .LVU330
+ 1086              	.LBE379:
+ 1087              	.LBE378:
+ 210:Core/Src/ili9341.c ****   ili9341_WriteData(0x78);
+ 1088              		.loc 1 210 3 is_stmt 1 view .LVU331
+ 1089              	.LBB380:
+ 1090              	.LBI380:
+ 291:Core/Src/ili9341.c **** {
+ 1091              		.loc 1 291 6 view .LVU332
+ 1092              	.LBB381:
+ 293:Core/Src/ili9341.c **** }
+ 1093              		.loc 1 293 3 view .LVU333
+ 1094 01e0 4E20     		movs	r0, #78
+ 1095 01e2 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1096              	.LVL84:
+ 293:Core/Src/ili9341.c **** }
+ 1097              		.loc 1 293 3 is_stmt 0 view .LVU334
+ 1098              	.LBE381:
+ 1099              	.LBE380:
+ 211:Core/Src/ili9341.c ****   ili9341_WriteData(0x3C);
+ 1100              		.loc 1 211 3 is_stmt 1 view .LVU335
+ 1101              	.LBB382:
+ 1102              	.LBI382:
+ 291:Core/Src/ili9341.c **** {
+ 1103              		.loc 1 291 6 view .LVU336
+ 1104              	.LBB383:
+ 293:Core/Src/ili9341.c **** }
+ 1105              		.loc 1 293 3 view .LVU337
+ 1106 01e6 7820     		movs	r0, #120
+ 1107 01e8 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1108              	.LVL85:
+ 293:Core/Src/ili9341.c **** }
+ 1109              		.loc 1 293 3 is_stmt 0 view .LVU338
+ 1110              	.LBE383:
+ 1111              	.LBE382:
+ 212:Core/Src/ili9341.c ****   ili9341_WriteData(0x09);
+ 1112              		.loc 1 212 3 is_stmt 1 view .LVU339
+ 1113              	.LBB384:
+ 1114              	.LBI384:
+ARM GAS  /tmp/cc1cDCDG.s 			page 32
+
+
+ 291:Core/Src/ili9341.c **** {
+ 1115              		.loc 1 291 6 view .LVU340
+ 1116              	.LBB385:
+ 293:Core/Src/ili9341.c **** }
+ 1117              		.loc 1 293 3 view .LVU341
+ 1118 01ec 3C20     		movs	r0, #60
+ 1119 01ee FFF7FEFF 		bl	LCD_IO_WriteData
+ 1120              	.LVL86:
+ 293:Core/Src/ili9341.c **** }
+ 1121              		.loc 1 293 3 is_stmt 0 view .LVU342
+ 1122              	.LBE385:
+ 1123              	.LBE384:
+ 213:Core/Src/ili9341.c ****   ili9341_WriteData(0x13);
+ 1124              		.loc 1 213 3 is_stmt 1 view .LVU343
+ 1125              	.LBB386:
+ 1126              	.LBI386:
+ 291:Core/Src/ili9341.c **** {
+ 1127              		.loc 1 291 6 view .LVU344
+ 1128              	.LBB387:
+ 293:Core/Src/ili9341.c **** }
+ 1129              		.loc 1 293 3 view .LVU345
+ 1130 01f2 0920     		movs	r0, #9
+ 1131 01f4 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1132              	.LVL87:
+ 293:Core/Src/ili9341.c **** }
+ 1133              		.loc 1 293 3 is_stmt 0 view .LVU346
+ 1134              	.LBE387:
+ 1135              	.LBE386:
+ 214:Core/Src/ili9341.c ****   ili9341_WriteData(0x05);
+ 1136              		.loc 1 214 3 is_stmt 1 view .LVU347
+ 1137              	.LBB388:
+ 1138              	.LBI388:
+ 291:Core/Src/ili9341.c **** {
+ 1139              		.loc 1 291 6 view .LVU348
+ 1140              	.LBB389:
+ 293:Core/Src/ili9341.c **** }
+ 1141              		.loc 1 293 3 view .LVU349
+ 1142 01f8 1320     		movs	r0, #19
+ 1143 01fa FFF7FEFF 		bl	LCD_IO_WriteData
+ 1144              	.LVL88:
+ 293:Core/Src/ili9341.c **** }
+ 1145              		.loc 1 293 3 is_stmt 0 view .LVU350
+ 1146              	.LBE389:
+ 1147              	.LBE388:
+ 215:Core/Src/ili9341.c ****   ili9341_WriteData(0x17);
+ 1148              		.loc 1 215 3 is_stmt 1 view .LVU351
+ 1149              	.LBB390:
+ 1150              	.LBI390:
+ 291:Core/Src/ili9341.c **** {
+ 1151              		.loc 1 291 6 view .LVU352
+ 1152              	.LBB391:
+ 293:Core/Src/ili9341.c **** }
+ 1153              		.loc 1 293 3 view .LVU353
+ 1154 01fe 0520     		movs	r0, #5
+ 1155 0200 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1156              	.LVL89:
+ 293:Core/Src/ili9341.c **** }
+ARM GAS  /tmp/cc1cDCDG.s 			page 33
+
+
+ 1157              		.loc 1 293 3 is_stmt 0 view .LVU354
+ 1158              	.LBE391:
+ 1159              	.LBE390:
+ 216:Core/Src/ili9341.c ****   ili9341_WriteData(0x11);
+ 1160              		.loc 1 216 3 is_stmt 1 view .LVU355
+ 1161              	.LBB392:
+ 1162              	.LBI392:
+ 291:Core/Src/ili9341.c **** {
+ 1163              		.loc 1 291 6 view .LVU356
+ 1164              	.LBB393:
+ 293:Core/Src/ili9341.c **** }
+ 1165              		.loc 1 293 3 view .LVU357
+ 1166 0204 1720     		movs	r0, #23
+ 1167 0206 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1168              	.LVL90:
+ 293:Core/Src/ili9341.c **** }
+ 1169              		.loc 1 293 3 is_stmt 0 view .LVU358
+ 1170              	.LBE393:
+ 1171              	.LBE392:
+ 217:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 1172              		.loc 1 217 3 is_stmt 1 view .LVU359
+ 1173              	.LBB394:
+ 1174              	.LBI394:
+ 291:Core/Src/ili9341.c **** {
+ 1175              		.loc 1 291 6 view .LVU360
+ 1176              	.LBB395:
+ 293:Core/Src/ili9341.c **** }
+ 1177              		.loc 1 293 3 view .LVU361
+ 1178 020a 1120     		movs	r0, #17
+ 1179 020c FFF7FEFF 		bl	LCD_IO_WriteData
+ 1180              	.LVL91:
+ 293:Core/Src/ili9341.c **** }
+ 1181              		.loc 1 293 3 is_stmt 0 view .LVU362
+ 1182              	.LBE395:
+ 1183              	.LBE394:
+ 218:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_NGAMMA);
+ 1184              		.loc 1 218 3 is_stmt 1 view .LVU363
+ 1185              	.LBB396:
+ 1186              	.LBI396:
+ 291:Core/Src/ili9341.c **** {
+ 1187              		.loc 1 291 6 view .LVU364
+ 1188              	.LBB397:
+ 293:Core/Src/ili9341.c **** }
+ 1189              		.loc 1 293 3 view .LVU365
+ 1190 0210 0020     		movs	r0, #0
+ 1191 0212 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1192              	.LVL92:
+ 293:Core/Src/ili9341.c **** }
+ 1193              		.loc 1 293 3 is_stmt 0 view .LVU366
+ 1194              	.LBE397:
+ 1195              	.LBE396:
+ 219:Core/Src/ili9341.c ****   ili9341_WriteData(0x00);
+ 1196              		.loc 1 219 3 is_stmt 1 view .LVU367
+ 1197              	.LBB398:
+ 1198              	.LBI398:
+ 281:Core/Src/ili9341.c **** {
+ 1199              		.loc 1 281 6 view .LVU368
+ARM GAS  /tmp/cc1cDCDG.s 			page 34
+
+
+ 1200              	.LBB399:
+ 283:Core/Src/ili9341.c **** }
+ 1201              		.loc 1 283 3 view .LVU369
+ 1202 0216 E120     		movs	r0, #225
+ 1203 0218 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 1204              	.LVL93:
+ 283:Core/Src/ili9341.c **** }
+ 1205              		.loc 1 283 3 is_stmt 0 view .LVU370
+ 1206              	.LBE399:
+ 1207              	.LBE398:
+ 220:Core/Src/ili9341.c ****   ili9341_WriteData(0x16);
+ 1208              		.loc 1 220 3 is_stmt 1 view .LVU371
+ 1209              	.LBB400:
+ 1210              	.LBI400:
+ 291:Core/Src/ili9341.c **** {
+ 1211              		.loc 1 291 6 view .LVU372
+ 1212              	.LBB401:
+ 293:Core/Src/ili9341.c **** }
+ 1213              		.loc 1 293 3 view .LVU373
+ 1214 021c 0020     		movs	r0, #0
+ 1215 021e FFF7FEFF 		bl	LCD_IO_WriteData
+ 1216              	.LVL94:
+ 293:Core/Src/ili9341.c **** }
+ 1217              		.loc 1 293 3 is_stmt 0 view .LVU374
+ 1218              	.LBE401:
+ 1219              	.LBE400:
+ 221:Core/Src/ili9341.c ****   ili9341_WriteData(0x1B);
+ 1220              		.loc 1 221 3 is_stmt 1 view .LVU375
+ 1221              	.LBB402:
+ 1222              	.LBI402:
+ 291:Core/Src/ili9341.c **** {
+ 1223              		.loc 1 291 6 view .LVU376
+ 1224              	.LBB403:
+ 293:Core/Src/ili9341.c **** }
+ 1225              		.loc 1 293 3 view .LVU377
+ 1226 0222 1620     		movs	r0, #22
+ 1227 0224 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1228              	.LVL95:
+ 293:Core/Src/ili9341.c **** }
+ 1229              		.loc 1 293 3 is_stmt 0 view .LVU378
+ 1230              	.LBE403:
+ 1231              	.LBE402:
+ 222:Core/Src/ili9341.c ****   ili9341_WriteData(0x04);
+ 1232              		.loc 1 222 3 is_stmt 1 view .LVU379
+ 1233              	.LBB404:
+ 1234              	.LBI404:
+ 291:Core/Src/ili9341.c **** {
+ 1235              		.loc 1 291 6 view .LVU380
+ 1236              	.LBB405:
+ 293:Core/Src/ili9341.c **** }
+ 1237              		.loc 1 293 3 view .LVU381
+ 1238 0228 1B20     		movs	r0, #27
+ 1239 022a FFF7FEFF 		bl	LCD_IO_WriteData
+ 1240              	.LVL96:
+ 293:Core/Src/ili9341.c **** }
+ 1241              		.loc 1 293 3 is_stmt 0 view .LVU382
+ 1242              	.LBE405:
+ARM GAS  /tmp/cc1cDCDG.s 			page 35
+
+
+ 1243              	.LBE404:
+ 223:Core/Src/ili9341.c ****   ili9341_WriteData(0x11);
+ 1244              		.loc 1 223 3 is_stmt 1 view .LVU383
+ 1245              	.LBB406:
+ 1246              	.LBI406:
+ 291:Core/Src/ili9341.c **** {
+ 1247              		.loc 1 291 6 view .LVU384
+ 1248              	.LBB407:
+ 293:Core/Src/ili9341.c **** }
+ 1249              		.loc 1 293 3 view .LVU385
+ 1250 022e 0420     		movs	r0, #4
+ 1251 0230 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1252              	.LVL97:
+ 293:Core/Src/ili9341.c **** }
+ 1253              		.loc 1 293 3 is_stmt 0 view .LVU386
+ 1254              	.LBE407:
+ 1255              	.LBE406:
+ 224:Core/Src/ili9341.c ****   ili9341_WriteData(0x07);
+ 1256              		.loc 1 224 3 is_stmt 1 view .LVU387
+ 1257              	.LBB408:
+ 1258              	.LBI408:
+ 291:Core/Src/ili9341.c **** {
+ 1259              		.loc 1 291 6 view .LVU388
+ 1260              	.LBB409:
+ 293:Core/Src/ili9341.c **** }
+ 1261              		.loc 1 293 3 view .LVU389
+ 1262 0234 1120     		movs	r0, #17
+ 1263 0236 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1264              	.LVL98:
+ 293:Core/Src/ili9341.c **** }
+ 1265              		.loc 1 293 3 is_stmt 0 view .LVU390
+ 1266              	.LBE409:
+ 1267              	.LBE408:
+ 225:Core/Src/ili9341.c ****   ili9341_WriteData(0x31);
+ 1268              		.loc 1 225 3 is_stmt 1 view .LVU391
+ 1269              	.LBB410:
+ 1270              	.LBI410:
+ 291:Core/Src/ili9341.c **** {
+ 1271              		.loc 1 291 6 view .LVU392
+ 1272              	.LBB411:
+ 293:Core/Src/ili9341.c **** }
+ 1273              		.loc 1 293 3 view .LVU393
+ 1274 023a 0720     		movs	r0, #7
+ 1275 023c FFF7FEFF 		bl	LCD_IO_WriteData
+ 1276              	.LVL99:
+ 293:Core/Src/ili9341.c **** }
+ 1277              		.loc 1 293 3 is_stmt 0 view .LVU394
+ 1278              	.LBE411:
+ 1279              	.LBE410:
+ 226:Core/Src/ili9341.c ****   ili9341_WriteData(0x33);
+ 1280              		.loc 1 226 3 is_stmt 1 view .LVU395
+ 1281              	.LBB412:
+ 1282              	.LBI412:
+ 291:Core/Src/ili9341.c **** {
+ 1283              		.loc 1 291 6 view .LVU396
+ 1284              	.LBB413:
+ 293:Core/Src/ili9341.c **** }
+ARM GAS  /tmp/cc1cDCDG.s 			page 36
+
+
+ 1285              		.loc 1 293 3 view .LVU397
+ 1286 0240 3120     		movs	r0, #49
+ 1287 0242 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1288              	.LVL100:
+ 293:Core/Src/ili9341.c **** }
+ 1289              		.loc 1 293 3 is_stmt 0 view .LVU398
+ 1290              	.LBE413:
+ 1291              	.LBE412:
+ 227:Core/Src/ili9341.c ****   ili9341_WriteData(0x42);
+ 1292              		.loc 1 227 3 is_stmt 1 view .LVU399
+ 1293              	.LBB414:
+ 1294              	.LBI414:
+ 291:Core/Src/ili9341.c **** {
+ 1295              		.loc 1 291 6 view .LVU400
+ 1296              	.LBB415:
+ 293:Core/Src/ili9341.c **** }
+ 1297              		.loc 1 293 3 view .LVU401
+ 1298 0246 3320     		movs	r0, #51
+ 1299 0248 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1300              	.LVL101:
+ 293:Core/Src/ili9341.c **** }
+ 1301              		.loc 1 293 3 is_stmt 0 view .LVU402
+ 1302              	.LBE415:
+ 1303              	.LBE414:
+ 228:Core/Src/ili9341.c ****   ili9341_WriteData(0x05);
+ 1304              		.loc 1 228 3 is_stmt 1 view .LVU403
+ 1305              	.LBB416:
+ 1306              	.LBI416:
+ 291:Core/Src/ili9341.c **** {
+ 1307              		.loc 1 291 6 view .LVU404
+ 1308              	.LBB417:
+ 293:Core/Src/ili9341.c **** }
+ 1309              		.loc 1 293 3 view .LVU405
+ 1310 024c 4220     		movs	r0, #66
+ 1311 024e FFF7FEFF 		bl	LCD_IO_WriteData
+ 1312              	.LVL102:
+ 293:Core/Src/ili9341.c **** }
+ 1313              		.loc 1 293 3 is_stmt 0 view .LVU406
+ 1314              	.LBE417:
+ 1315              	.LBE416:
+ 229:Core/Src/ili9341.c ****   ili9341_WriteData(0x0C);
+ 1316              		.loc 1 229 3 is_stmt 1 view .LVU407
+ 1317              	.LBB418:
+ 1318              	.LBI418:
+ 291:Core/Src/ili9341.c **** {
+ 1319              		.loc 1 291 6 view .LVU408
+ 1320              	.LBB419:
+ 293:Core/Src/ili9341.c **** }
+ 1321              		.loc 1 293 3 view .LVU409
+ 1322 0252 0520     		movs	r0, #5
+ 1323 0254 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1324              	.LVL103:
+ 293:Core/Src/ili9341.c **** }
+ 1325              		.loc 1 293 3 is_stmt 0 view .LVU410
+ 1326              	.LBE419:
+ 1327              	.LBE418:
+ 230:Core/Src/ili9341.c ****   ili9341_WriteData(0x0A);
+ARM GAS  /tmp/cc1cDCDG.s 			page 37
+
+
+ 1328              		.loc 1 230 3 is_stmt 1 view .LVU411
+ 1329              	.LBB420:
+ 1330              	.LBI420:
+ 291:Core/Src/ili9341.c **** {
+ 1331              		.loc 1 291 6 view .LVU412
+ 1332              	.LBB421:
+ 293:Core/Src/ili9341.c **** }
+ 1333              		.loc 1 293 3 view .LVU413
+ 1334 0258 0C20     		movs	r0, #12
+ 1335 025a FFF7FEFF 		bl	LCD_IO_WriteData
+ 1336              	.LVL104:
+ 293:Core/Src/ili9341.c **** }
+ 1337              		.loc 1 293 3 is_stmt 0 view .LVU414
+ 1338              	.LBE421:
+ 1339              	.LBE420:
+ 231:Core/Src/ili9341.c ****   ili9341_WriteData(0x28);
+ 1340              		.loc 1 231 3 is_stmt 1 view .LVU415
+ 1341              	.LBB422:
+ 1342              	.LBI422:
+ 291:Core/Src/ili9341.c **** {
+ 1343              		.loc 1 291 6 view .LVU416
+ 1344              	.LBB423:
+ 293:Core/Src/ili9341.c **** }
+ 1345              		.loc 1 293 3 view .LVU417
+ 1346 025e 0A20     		movs	r0, #10
+ 1347 0260 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1348              	.LVL105:
+ 293:Core/Src/ili9341.c **** }
+ 1349              		.loc 1 293 3 is_stmt 0 view .LVU418
+ 1350              	.LBE423:
+ 1351              	.LBE422:
+ 232:Core/Src/ili9341.c ****   ili9341_WriteData(0x2F);
+ 1352              		.loc 1 232 3 is_stmt 1 view .LVU419
+ 1353              	.LBB424:
+ 1354              	.LBI424:
+ 291:Core/Src/ili9341.c **** {
+ 1355              		.loc 1 291 6 view .LVU420
+ 1356              	.LBB425:
+ 293:Core/Src/ili9341.c **** }
+ 1357              		.loc 1 293 3 view .LVU421
+ 1358 0264 2820     		movs	r0, #40
+ 1359 0266 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1360              	.LVL106:
+ 293:Core/Src/ili9341.c **** }
+ 1361              		.loc 1 293 3 is_stmt 0 view .LVU422
+ 1362              	.LBE425:
+ 1363              	.LBE424:
+ 233:Core/Src/ili9341.c ****   ili9341_WriteData(0x0F);
+ 1364              		.loc 1 233 3 is_stmt 1 view .LVU423
+ 1365              	.LBB426:
+ 1366              	.LBI426:
+ 291:Core/Src/ili9341.c **** {
+ 1367              		.loc 1 291 6 view .LVU424
+ 1368              	.LBB427:
+ 293:Core/Src/ili9341.c **** }
+ 1369              		.loc 1 293 3 view .LVU425
+ 1370 026a 2F20     		movs	r0, #47
+ARM GAS  /tmp/cc1cDCDG.s 			page 38
+
+
+ 1371 026c FFF7FEFF 		bl	LCD_IO_WriteData
+ 1372              	.LVL107:
+ 293:Core/Src/ili9341.c **** }
+ 1373              		.loc 1 293 3 is_stmt 0 view .LVU426
+ 1374              	.LBE427:
+ 1375              	.LBE426:
+ 234:Core/Src/ili9341.c ****   
+ 1376              		.loc 1 234 3 is_stmt 1 view .LVU427
+ 1377              	.LBB428:
+ 1378              	.LBI428:
+ 291:Core/Src/ili9341.c **** {
+ 1379              		.loc 1 291 6 view .LVU428
+ 1380              	.LBB429:
+ 293:Core/Src/ili9341.c **** }
+ 1381              		.loc 1 293 3 view .LVU429
+ 1382 0270 0F20     		movs	r0, #15
+ 1383 0272 FFF7FEFF 		bl	LCD_IO_WriteData
+ 1384              	.LVL108:
+ 293:Core/Src/ili9341.c **** }
+ 1385              		.loc 1 293 3 is_stmt 0 view .LVU430
+ 1386              	.LBE429:
+ 1387              	.LBE428:
+ 236:Core/Src/ili9341.c ****   LCD_Delay(200);
+ 1388              		.loc 1 236 3 is_stmt 1 view .LVU431
+ 1389              	.LBB430:
+ 1390              	.LBI430:
+ 281:Core/Src/ili9341.c **** {
+ 1391              		.loc 1 281 6 view .LVU432
+ 1392              	.LBB431:
+ 283:Core/Src/ili9341.c **** }
+ 1393              		.loc 1 283 3 view .LVU433
+ 1394 0276 1120     		movs	r0, #17
+ 1395 0278 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 1396              	.LVL109:
+ 283:Core/Src/ili9341.c **** }
+ 1397              		.loc 1 283 3 is_stmt 0 view .LVU434
+ 1398              	.LBE431:
+ 1399              	.LBE430:
+ 237:Core/Src/ili9341.c ****   ili9341_WriteReg(LCD_DISPLAY_ON);
+ 1400              		.loc 1 237 3 is_stmt 1 view .LVU435
+ 1401 027c C820     		movs	r0, #200
+ 1402 027e FFF7FEFF 		bl	LCD_Delay
+ 1403              	.LVL110:
+ 238:Core/Src/ili9341.c ****   /* GRAM start writing */
+ 1404              		.loc 1 238 3 view .LVU436
+ 1405              	.LBB432:
+ 1406              	.LBI432:
+ 281:Core/Src/ili9341.c **** {
+ 1407              		.loc 1 281 6 view .LVU437
+ 1408              	.LBB433:
+ 283:Core/Src/ili9341.c **** }
+ 1409              		.loc 1 283 3 view .LVU438
+ 1410 0282 2920     		movs	r0, #41
+ 1411 0284 FFF7FEFF 		bl	LCD_IO_WriteReg
+ 1412              	.LVL111:
+ 283:Core/Src/ili9341.c **** }
+ 1413              		.loc 1 283 3 is_stmt 0 view .LVU439
+ARM GAS  /tmp/cc1cDCDG.s 			page 39
+
+
+ 1414              	.LBE433:
+ 1415              	.LBE432:
+ 240:Core/Src/ili9341.c **** }
+ 1416              		.loc 1 240 3 is_stmt 1 view .LVU440
+ 1417              	.LBB434:
+ 1418              	.LBI434:
+ 281:Core/Src/ili9341.c **** {
+ 1419              		.loc 1 281 6 view .LVU441
+ 1420              	.LBB435:
+ 283:Core/Src/ili9341.c **** }
+ 1421              		.loc 1 283 3 view .LVU442
+ 1422              	.LBE435:
+ 1423              	.LBE434:
+ 241:Core/Src/ili9341.c **** 
+ 1424              		.loc 1 241 1 is_stmt 0 view .LVU443
+ 1425 0288 BDE80840 		pop	{r3, lr}
+ 1426              	.LCFI1:
+ 1427              		.cfi_restore 14
+ 1428              		.cfi_restore 3
+ 1429              		.cfi_def_cfa_offset 0
+ 1430              	.LBB437:
+ 1431              	.LBB436:
+ 283:Core/Src/ili9341.c **** }
+ 1432              		.loc 1 283 3 view .LVU444
+ 1433 028c 2C20     		movs	r0, #44
+ 1434 028e FFF7FEBF 		b	LCD_IO_WriteReg
+ 1435              	.LVL112:
+ 1436              	.LBE436:
+ 1437              	.LBE437:
+ 1438              		.cfi_endproc
+ 1439              	.LFE0:
+ 1441 0292 00BF     		.section	.text.ili9341_ReadID,"ax",%progbits
+ 1442              		.align	1
+ 1443              		.p2align 2,,3
+ 1444              		.global	ili9341_ReadID
+ 1445              		.syntax unified
+ 1446              		.thumb
+ 1447              		.thumb_func
+ 1449              	ili9341_ReadID:
+ 1450              	.LFB1:
+ 249:Core/Src/ili9341.c ****   LCD_IO_Init();
+ 1451              		.loc 1 249 1 is_stmt 1 view -0
+ 1452              		.cfi_startproc
+ 1453              		@ args = 0, pretend = 0, frame = 0
+ 1454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 250:Core/Src/ili9341.c ****   return ((uint16_t)ili9341_ReadData(LCD_READ_ID4, LCD_READ_ID4_SIZE));
+ 1455              		.loc 1 250 3 view .LVU446
+ 249:Core/Src/ili9341.c ****   LCD_IO_Init();
+ 1456              		.loc 1 249 1 is_stmt 0 view .LVU447
+ 1457 0000 08B5     		push	{r3, lr}
+ 1458              	.LCFI2:
+ 1459              		.cfi_def_cfa_offset 8
+ 1460              		.cfi_offset 3, -8
+ 1461              		.cfi_offset 14, -4
+ 250:Core/Src/ili9341.c ****   return ((uint16_t)ili9341_ReadData(LCD_READ_ID4, LCD_READ_ID4_SIZE));
+ 1462              		.loc 1 250 3 view .LVU448
+ 1463 0002 FFF7FEFF 		bl	LCD_IO_Init
+ARM GAS  /tmp/cc1cDCDG.s 			page 40
+
+
+ 1464              	.LVL113:
+ 251:Core/Src/ili9341.c **** }
+ 1465              		.loc 1 251 3 is_stmt 1 view .LVU449
+ 1466              	.LBB438:
+ 1467              	.LBI438:
+ 302:Core/Src/ili9341.c **** {
+ 1468              		.loc 1 302 10 view .LVU450
+ 1469              	.LBB439:
+ 305:Core/Src/ili9341.c **** }
+ 1470              		.loc 1 305 3 view .LVU451
+ 305:Core/Src/ili9341.c **** }
+ 1471              		.loc 1 305 11 is_stmt 0 view .LVU452
+ 1472 0006 0321     		movs	r1, #3
+ 1473 0008 D320     		movs	r0, #211
+ 1474 000a FFF7FEFF 		bl	LCD_IO_ReadData
+ 1475              	.LVL114:
+ 305:Core/Src/ili9341.c **** }
+ 1476              		.loc 1 305 11 view .LVU453
+ 1477              	.LBE439:
+ 1478              	.LBE438:
+ 252:Core/Src/ili9341.c **** 
+ 1479              		.loc 1 252 1 view .LVU454
+ 1480 000e 80B2     		uxth	r0, r0
+ 1481 0010 08BD     		pop	{r3, pc}
+ 1482              		.cfi_endproc
+ 1483              	.LFE1:
+ 1485 0012 00BF     		.section	.text.ili9341_WriteReg,"ax",%progbits
+ 1486              		.align	1
+ 1487              		.p2align 2,,3
+ 1488              		.global	ili9341_WriteReg
+ 1489              		.syntax unified
+ 1490              		.thumb
+ 1491              		.thumb_func
+ 1493              	ili9341_WriteReg:
+ 1494              	.LVL115:
+ 1495              	.LFB4:
+ 282:Core/Src/ili9341.c ****   LCD_IO_WriteReg(LCD_Reg);
+ 1496              		.loc 1 282 1 is_stmt 1 view -0
+ 1497              		.cfi_startproc
+ 1498              		@ args = 0, pretend = 0, frame = 0
+ 1499              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1500              		@ link register save eliminated.
+ 283:Core/Src/ili9341.c **** }
+ 1501              		.loc 1 283 3 view .LVU456
+ 1502 0000 FFF7FEBF 		b	LCD_IO_WriteReg
+ 1503              	.LVL116:
+ 283:Core/Src/ili9341.c **** }
+ 1504              		.loc 1 283 3 is_stmt 0 view .LVU457
+ 1505              		.cfi_endproc
+ 1506              	.LFE4:
+ 1508              		.section	.text.ili9341_WriteData,"ax",%progbits
+ 1509              		.align	1
+ 1510              		.p2align 2,,3
+ 1511              		.global	ili9341_WriteData
+ 1512              		.syntax unified
+ 1513              		.thumb
+ 1514              		.thumb_func
+ARM GAS  /tmp/cc1cDCDG.s 			page 41
+
+
+ 1516              	ili9341_WriteData:
+ 1517              	.LVL117:
+ 1518              	.LFB5:
+ 292:Core/Src/ili9341.c ****   LCD_IO_WriteData(RegValue);
+ 1519              		.loc 1 292 1 is_stmt 1 view -0
+ 1520              		.cfi_startproc
+ 1521              		@ args = 0, pretend = 0, frame = 0
+ 1522              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1523              		@ link register save eliminated.
+ 293:Core/Src/ili9341.c **** }
+ 1524              		.loc 1 293 3 view .LVU459
+ 1525 0000 FFF7FEBF 		b	LCD_IO_WriteData
+ 1526              	.LVL118:
+ 293:Core/Src/ili9341.c **** }
+ 1527              		.loc 1 293 3 is_stmt 0 view .LVU460
+ 1528              		.cfi_endproc
+ 1529              	.LFE5:
+ 1531              		.section	.text.ili9341_ReadData,"ax",%progbits
+ 1532              		.align	1
+ 1533              		.p2align 2,,3
+ 1534              		.global	ili9341_ReadData
+ 1535              		.syntax unified
+ 1536              		.thumb
+ 1537              		.thumb_func
+ 1539              	ili9341_ReadData:
+ 1540              	.LVL119:
+ 1541              	.LFB6:
+ 303:Core/Src/ili9341.c ****   /* Read a max of 4 bytes */
+ 1542              		.loc 1 303 1 is_stmt 1 view -0
+ 1543              		.cfi_startproc
+ 1544              		@ args = 0, pretend = 0, frame = 0
+ 1545              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1546              		@ link register save eliminated.
+ 305:Core/Src/ili9341.c **** }
+ 1547              		.loc 1 305 3 view .LVU462
+ 305:Core/Src/ili9341.c **** }
+ 1548              		.loc 1 305 11 is_stmt 0 view .LVU463
+ 1549 0000 FFF7FEBF 		b	LCD_IO_ReadData
+ 1550              	.LVL120:
+ 305:Core/Src/ili9341.c **** }
+ 1551              		.loc 1 305 11 view .LVU464
+ 1552              		.cfi_endproc
+ 1553              	.LFE6:
+ 1555              		.global	ili9341_drv
+ 1556              		.section	.data.ili9341_drv,"aw"
+ 1557              		.align	2
+ 1560              	ili9341_drv:
+ 1561 0000 00000000 		.word	ili9341_Init
+ 1562 0004 00000000 		.word	ili9341_ReadID
+ 1563 0008 00000000 		.word	ili9341_DisplayOn
+ 1564 000c 00000000 		.word	ili9341_DisplayOff
+ 1565 0010 00000000 		.word	0
+ 1566 0014 00000000 		.word	0
+ 1567 0018 00000000 		.word	0
+ 1568 001c 00000000 		.word	0
+ 1569 0020 00000000 		.word	0
+ 1570 0024 00000000 		.word	0
+ARM GAS  /tmp/cc1cDCDG.s 			page 42
+
+
+ 1571 0028 00000000 		.word	ili9341_GetLcdPixelWidth
+ 1572 002c 00000000 		.word	ili9341_GetLcdPixelHeight
+ 1573 0030 00000000 		.word	0
+ 1574 0034 00000000 		.word	0
+ 1575              		.text
+ 1576              	.Letext0:
+ 1577              		.file 2 "/home/irfan/Desktop/arm/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux/gcc-arm-none-eabi-10.
+ 1578              		.file 3 "/home/irfan/Desktop/arm/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux/gcc-arm-none-eabi-10.
+ 1579              		.file 4 "Core/Inc/lcd.h"
+ 1580              		.file 5 "Core/Inc/ili9341.h"
+ARM GAS  /tmp/cc1cDCDG.s 			page 43
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ili9341.c
+     /tmp/cc1cDCDG.s:20     .text.ili9341_GetLcdPixelWidth:0000000000000000 $t
+     /tmp/cc1cDCDG.s:27     .text.ili9341_GetLcdPixelWidth:0000000000000000 ili9341_GetLcdPixelWidth
+     /tmp/cc1cDCDG.s:43     .text.ili9341_GetLcdPixelHeight:0000000000000000 $t
+     /tmp/cc1cDCDG.s:50     .text.ili9341_GetLcdPixelHeight:0000000000000000 ili9341_GetLcdPixelHeight
+     /tmp/cc1cDCDG.s:65     .text.ili9341_DisplayOn:0000000000000000 $t
+     /tmp/cc1cDCDG.s:72     .text.ili9341_DisplayOn:0000000000000000 ili9341_DisplayOn
+     /tmp/cc1cDCDG.s:95     .text.ili9341_DisplayOff:0000000000000000 $t
+     /tmp/cc1cDCDG.s:102    .text.ili9341_DisplayOff:0000000000000000 ili9341_DisplayOff
+     /tmp/cc1cDCDG.s:125    .text.ili9341_Init:0000000000000000 $t
+     /tmp/cc1cDCDG.s:132    .text.ili9341_Init:0000000000000000 ili9341_Init
+     /tmp/cc1cDCDG.s:1442   .text.ili9341_ReadID:0000000000000000 $t
+     /tmp/cc1cDCDG.s:1449   .text.ili9341_ReadID:0000000000000000 ili9341_ReadID
+     /tmp/cc1cDCDG.s:1486   .text.ili9341_WriteReg:0000000000000000 $t
+     /tmp/cc1cDCDG.s:1493   .text.ili9341_WriteReg:0000000000000000 ili9341_WriteReg
+     /tmp/cc1cDCDG.s:1509   .text.ili9341_WriteData:0000000000000000 $t
+     /tmp/cc1cDCDG.s:1516   .text.ili9341_WriteData:0000000000000000 ili9341_WriteData
+     /tmp/cc1cDCDG.s:1532   .text.ili9341_ReadData:0000000000000000 $t
+     /tmp/cc1cDCDG.s:1539   .text.ili9341_ReadData:0000000000000000 ili9341_ReadData
+     /tmp/cc1cDCDG.s:1560   .data.ili9341_drv:0000000000000000 ili9341_drv
+     /tmp/cc1cDCDG.s:1557   .data.ili9341_drv:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+LCD_IO_WriteReg
+LCD_IO_Init
+LCD_IO_WriteData
+LCD_Delay
+LCD_IO_ReadData

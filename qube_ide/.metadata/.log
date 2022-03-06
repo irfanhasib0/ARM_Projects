@@ -1,0 +1,42 @@
+!SESSION 2022-03-06 12:26:44.067 -----------------------------------------------
+eclipse.buildId=Version 1.8.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -data /home/irfan/Desktop/arm/ARM_Projects/qube_ide -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-03-06 12:26:47.602
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-03-06 12:26:47.642
+!MESSAGE Log4j initialized with config file /home/irfan/Desktop/arm/ARM_Projects/qube_ide/.metadata/.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-03-06 12:26:49.403
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-03-06 17:22:30.553
+!MESSAGE Indexed 'STM32_DISC_TFT' (54 sources, 125 headers) in 4.17 sec: 12,591 declarations; 86,066 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.002%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-03-06 18:42:42.189
+!MESSAGE Indexed 'STM32_DISC_TFT' (85 sources, 178 headers) in 4.93 sec: 18,979 declarations; 107,107 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0016%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-03-06 18:55:02.196
+!MESSAGE Indexed 'STM32_DISC_TFT' (85 sources, 178 headers) in 5 sec: 18,979 declarations; 107,107 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0016%)
+!SESSION 2022-03-06 19:00:56.051 -----------------------------------------------
+eclipse.buildId=Version 1.8.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2022-03-06 19:01:07.673
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-03-06 19:01:10.566
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-03-06 19:01:10.612
+!MESSAGE Log4j initialized with config file /home/irfan/Desktop/arm/ARM_Projects/qube_ide/.metadata/.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-03-06 19:01:14.160
+!MESSAGE Started RMI Server, listening on port 41337

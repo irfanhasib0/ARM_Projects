@@ -1,0 +1,10 @@
+21:54:45 **** Incremental Build of configuration Debug for project STM32_DISC_TFT ****
+make -j12 all 
+arm-none-eabi-size   STM32_DISC_TFT.elf 
+   text	   data	    bss	    dec	    hex	filename
+  48708	     96	   3856	  52660	   cdb4	STM32_DISC_TFT.elf
+Finished building: default.size.stdout
+ 
+
+21:54:46 Build Finished. 0 errors, 0 warnings. (took 472ms)
+
